@@ -5,6 +5,20 @@ build/
 dist/
 wheels/
 *.egg-info
+migrations/
 
 # Virtual environments
 .venv
+
+# Database
+*.sqlite3
+
+# apps
+bart-large-cnn/
+msmarco-distilbert-base-v3/
+s2v_old/
+t5/
+
+# Jupiter notebook
+.ipynb_checkpoints/
+*.ipynb
