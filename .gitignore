@@ -6,6 +6,7 @@ dist/
 wheels/
 *.egg-info
 migrations/
+hello.py
 
 # Virtual environments
 .venv

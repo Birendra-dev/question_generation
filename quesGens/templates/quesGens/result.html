@@ -3,45 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generated MCQ Result</title>
+    <title>MCQ Generator - Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+        }
+        .mcq {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .mcq strong {
+            font-size: 18px;
+        }
+        .mcq ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .mcq ul li {
+            background-color: #fafafa;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
-    <h1>Generated MCQ</h1>
 
-    <h2>Original Context</h2>
-    <p>{{ context }}</p>
+<h2>Generated Multiple Choice Questions (MCQs)</h2>
 
-    <h2>Summarized Context</h2>
-    <p>{{ summary_text }}</p>
+{% if mcq_list %}
+    {% for mcq in mcq_list %}
+        <div class="mcq">
+            <p><strong>Question {{ forloop.counter }}:</strong> {{ mcq.question }}</p>
+            <ul>
+                {% for option in mcq.options %}
+                    <li>{{ option }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No MCQs generated. Please try again with different input.</p>
+{% endif %}
 
-    <h2>Generated Question</h2>
-    <p>{{ question }}</p>
-
-    <h2>Answer</h2>
-    <p>{{ answer }}</p>
-    
-    <h2>Keywords Found</h2>
-    <ul>
-        {% for keyword in keywords %}
-        <li>{{ keyword }}</li>
-    
-        <!-- Display distractors for each keyword -->
-        <h2>Distractors:</h2>
-        <ul>
-            {% for keyword, distractors in distractors_dict.items %}
-                <li><strong>{{ keyword }}:</strong> 
-                    <ul>
-                        {% for distractor in distractors %}
-                            <li>{{ distractor }}</li>
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
-        {% endfor %}
-    </ul>
-
-
-    <a href="{% url 'generate_mcq' %}">Generate another</a>
 </body>
 </html>

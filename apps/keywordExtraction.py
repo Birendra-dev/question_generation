@@ -58,7 +58,7 @@ def get_nouns_multipartite(content):
     return out
 
 
-def get_keywords(originaltext, summarytext):
+def get_keywords(originaltext, summarytext,num_keywords=4):
     """
     Extract keywords from original text and match them with the summary text.
     """
@@ -80,4 +80,4 @@ def get_keywords(originaltext, summarytext):
     important_keywords = [keyword for keyword in keywords if keyword in keywords_found]
 
     # Return the top 4 important keywords
-    return important_keywords[:4]
+    return important_keywords[:num_keywords]
