@@ -19,13 +19,28 @@
 
     <h2>Answer</h2>
     <p>{{ answer }}</p>
-
+    
     <h2>Keywords Found</h2>
     <ul>
         {% for keyword in keywords %}
-            <li>{{ keyword }}</li>
+        <li>{{ keyword }}</li>
+    
+        <!-- Display distractors for each keyword -->
+        <h2>Distractors:</h2>
+        <ul>
+            {% for keyword, distractors in distractors_dict.items %}
+                <li><strong>{{ keyword }}:</strong> 
+                    <ul>
+                        {% for distractor in distractors %}
+                            <li>{{ distractor }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
         {% endfor %}
     </ul>
+
 
     <a href="{% url 'generate_mcq' %}">Generate another</a>
 </body>
