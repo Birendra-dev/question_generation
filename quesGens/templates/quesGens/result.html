@@ -1,5 +1,32 @@
-<h1>Generated Question</h1>
-<p><strong>Original Context:</strong> {{ context }}</p>
-<p><strong>Summarized Context:</strong> {{ summary }}</p>
-<p><strong>Answer:</strong> {{ answer }}</p>
-<p><strong>Question:</strong> {{ question }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated MCQ Result</title>
+</head>
+<body>
+    <h1>Generated MCQ</h1>
+
+    <h2>Original Context</h2>
+    <p>{{ context }}</p>
+
+    <h2>Summarized Context</h2>
+    <p>{{ summary_text }}</p>
+
+    <h2>Generated Question</h2>
+    <p>{{ question }}</p>
+
+    <h2>Answer</h2>
+    <p>{{ answer }}</p>
+
+    <h2>Keywords Found</h2>
+    <ul>
+        {% for keyword in keywords %}
+            <li>{{ keyword }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'generate_mcq' %}">Generate another</a>
+</body>
+</html>

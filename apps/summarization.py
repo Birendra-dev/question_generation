@@ -5,14 +5,19 @@ import nltk
 from nltk.tokenize import sent_tokenize
 from transformers import BartForConditionalGeneration, BartTokenizer
 
-nltk.download('punkt_tab')  # Ensure this is downloaded
+# nltk.download('punkt_tab')  # Ensure this is downloaded
 
+try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    print("Punkt tokenizer not found. Downloading...")
+    nltk.download('punkt_tab')
 
 # Check if model directory exists, if not, download it from Hugging Face
 model_dir = 'apps/bart-large-cnn'
 
-# Check if GPU is available, otherwise use CPU
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# Set device to CPU
+device = torch.device('cpu')
 
 summary_model = BartForConditionalGeneration.from_pretrained(model_dir)
 summary_tokenizer = BartTokenizer.from_pretrained(model_dir)
@@ -22,7 +27,6 @@ summary_tokenizer = BartTokenizer.from_pretrained(model_dir)
 # np.random.seed(42)
 # torch.manual_seed(42)
 # torch.cuda.manual_seed_all(42)
-
 
 def postprocesstext(content):
     final = ""

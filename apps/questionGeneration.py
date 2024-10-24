@@ -4,8 +4,7 @@ from transformers import T5ForConditionalGeneration, T5Tokenizer
 trained_model_path = 'apps/t5/model'
 trained_tokenizer = 'apps/t5/tokenizer'
 
-# Check if GPU is available, otherwise use CPU
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cpu')
 
 # Load the model and tokenizer
 question_model = T5ForConditionalGeneration.from_pretrained(trained_model_path).to(device)  # Move model to device
