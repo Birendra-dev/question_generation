@@ -1,9 +1,27 @@
-#To run this project
-1.Create venv using uv(recommended) or other package manager
-  uv venv --seed --python 3.9
-2. Activate the venv
-  source .venv/Scripts/activate (in bash)
-3. To download all packages
-  uv sync 
+```markdown
+# Project Setup Guide
 
-for download model visit telegram or DM me in telegram
+## To Run This Project
+
+1. Create virtual environment using UV (recommended) or other package manager:
+```bash
+uv venv --seed --python 3.9
+```
+
+2. Activate the virtual environment (in bash):
+```bash
+source .venv/Scripts/activate
+```
+
+3. To download all packages:
+```bash
+uv sync
+```
+
+For downloading model, visit Telegram or DM me in Telegram.
+
+---
+*Note: UV package manager is recommended for better performance and dependency management.*
+```
+
+I've combined everything into a single, concise README while maintaining clear formatting. Would you like any adjustments to this format?
