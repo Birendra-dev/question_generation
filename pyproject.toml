@@ -18,5 +18,10 @@ dependencies = [
     "transformers==4.28.1",
 ]
 
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.7.1",
+]
+
 [tool.uv.sources]
 pke = { git = "https://github.com/boudinfl/pke.git" }
