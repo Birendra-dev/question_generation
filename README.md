@@ -23,5 +23,3 @@ For downloading model, visit Telegram or DM me in Telegram.
 ---
 *Note: UV package manager is recommended for better performance and dependency management.*
 ```
-
-I've combined everything into a single, concise README while maintaining clear formatting. Would you like any adjustments to this format?
