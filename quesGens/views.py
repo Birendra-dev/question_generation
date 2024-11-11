@@ -7,6 +7,10 @@ from apps.keywordExtraction import get_keywords
 from apps.questionGeneration import get_question, question_model, question_tokenizer
 from apps.summarization import summarizer, summary_model, summary_tokenizer
 
+
+from apps.raceKeyword import get_keywords_rake
+from apps.t5distractors import get_distractors_t5, dis_model, dis_tokenizer
+
 from .forms import InputForm
 
 
@@ -19,22 +23,33 @@ def generate_mcq(request):
             num_keywords = int(form.cleaned_data["num_keywords"])
 
             # Step 1: Summarize the context
-            summary_text = summarizer(context, summary_model, summary_tokenizer)
+            # summary_text = summarizer(context, summary_model, summary_tokenizer)
 
             # Step 2: Extract keywords from original context and summarized text
-            keywords = get_keywords(context, summary_text, num_keywords)
+            # keywords = get_keywords(context, summary_text, num_keywords)
+            keywords = get_keywords_rake(context, num_keywords)
 
             distractors_dict = {}
             questions_dict = {}  # Store questions for each keyword
-
+            print(type(keywords))
             # Step 3: Generate questions and distractors
             for keyword in keywords:
                 question = get_question(
-                    summary_text, keyword, question_model, question_tokenizer
+                    context, keyword, question_model, question_tokenizer
                 )  # Generate question based on the summary
-                distractors = get_distractors(
-                    keyword, s2v
-                )  # Generate distractors for the keyword
+
+                # distractors = get_distractors(
+                #     keyword, s2v
+                # )  # Generate distractors for the keyword
+
+                # Generate distractors using the T5 model
+                distractors = get_distractors_t5(
+                        question=question,
+                        answer=keyword,
+                        context=context,
+                        model=dis_model,
+                        tokenizer=dis_tokenizer
+                    )
 
                 # Store the question and distractors for the keyword
                 questions_dict[keyword] = question
@@ -63,7 +78,7 @@ def generate_mcq(request):
             # Step 5: Prepare data to be sent to the result template
             result_data = {
                 "context": context,
-                "summary_text": summary_text,
+                # "summary_text": summary_text,
                 "mcq_list": mcq_list,  # List of questions with options
             }
 

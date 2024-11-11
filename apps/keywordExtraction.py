@@ -83,3 +83,17 @@ def get_keywords(originaltext, summarytext, num_keywords=4):
 
     # Return the top 4 important keywords
     return important_keywords[:num_keywords]
+
+if __name__ == "__main__":
+    # Sample text
+    original_text = """There were two brothers; the older one was always mean to the younger one. 
+    The older one would chop firewood in the forest and sell it in the market. One day, 
+    he stumbled across a magical tree. The tree begged him not to cut him down and promised him golden apples in exchange. 
+    The older brother felt disappointed with the number of apples he received. He decided to cut down the tree anyway,
+    but the tree showered him with hundreds of needles"""
+    summary_text = "Two brothers, older mean to younger. Older chops firewood, finds magical tree with golden apples. Disappointed, cuts tree, gets needles."
+
+    # Extract keywords from the original text and summary
+    keywords = get_keywords(original_text, summary_text, num_keywords=5)
+    print("Keywords:", keywords)
+    print(type(keywords))

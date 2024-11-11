@@ -36,3 +36,4 @@ def get_distractors(word, s2v):
 
 if __name__ == "__main__":
     print(get_distractors("Nepal", s2v))
+    print(type(get_distractors("Python", s2v)))
