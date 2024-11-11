@@ -16,10 +16,13 @@ def get_distractors(word, s2v):
     similarWords = set()  # Using a set to avoid duplicates
     word = word.lower().replace(" ", "_")
     try:
+        # Attempt to get the best sense of the word
         sense = s2v.get_best_sense(word)
-        most_similar = s2v.most_similar(
-            sense, n=5
-        )  # Get more similar words to ensure enough distinct options
+        if sense is None:
+            return ["No distractors found"]  # Return a message if no sense is found
+        
+        # Get most similar words if a sense is found
+        most_similar = s2v.most_similar(sense, n=5)
         for each_word in most_similar:
             clean_word = each_word[0].split("|")[0].replace("_", " ")
             similarWords.add(clean_word)  # Add to set, which ensures uniqueness
@@ -32,6 +35,7 @@ def get_distractors(word, s2v):
 
     # Convert the set back to a list and return the first 3 distinct distractors
     return list(similarWords)[:3]
+
 
 
 if __name__ == "__main__":

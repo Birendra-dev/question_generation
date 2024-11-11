@@ -1,6 +1,10 @@
 import random
 
 from django.shortcuts import render
+from django.http import FileResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from io import BytesIO
 
 from apps.s2vdistractors import get_distractors, s2v
 from apps.summarization import summarizer, summary_model, summary_tokenizer
@@ -21,40 +25,41 @@ def generate_mcq(request):
             context = form.cleaned_data["context"]
             # option to select the number of keywords
             num_keywords = int(form.cleaned_data["num_keywords"])
+            option_1 = form.cleaned_data["option_1"]  # Question generation choice
+            option_2 = form.cleaned_data["option_2"]  # Keyword extraction choice
+            option_3 = form.cleaned_data["option_3"]  # Distractor generation choice            
             
-            ## Step 1: Extract keywords from the context
-            # option 1: by summarizing the context and using spacy
-            summary_text = summarizer(context, summary_model, summary_tokenizer)
-            keywords = get_keywords(context, summary_text, num_keywords) 
-
-            # option 2: by extracting keywords from the context using RAKE
-            # keywords = get_keywords_rake(context, num_keywords)
-
-            # option 3: by extracting keywords from the context using DistilBERT
-            # keywords = extract_keywords(context, num_keywords=num_keywords)
+            # Step 1: Extract keywords based on the selected option
+            if option_2 == 'spacy':
+                summary_text = summarizer(context, summary_model, summary_tokenizer)
+                keywords = get_keywords(context, summary_text, num_keywords)
+            elif option_2 == 'rake':
+                keywords = get_keywords_rake(context, num_keywords)
+            elif option_2 == 'distilBERT':
+                keywords = extract_keywords(context, num_keywords=num_keywords)
+            else:
+                keywords = []  # Fallback if no valid option selected
 
             distractors_dict = {}
             questions_dict = {}  # Store questions for each keyword
 
             # Step 2: Generate questions and distractors
             for keyword in keywords:
-                question = get_question(
-                    context, keyword, question_model, question_tokenizer
-                )
-                #option 1: distractors using s2v
-                # distractors = get_distractors(
-                #     keyword, s2v
-                # )  # Generate distractors for the keyword
+                question = get_question(context, keyword, question_model, question_tokenizer)
 
-                #option 2: distractors using T5
-                # Generate distractors using the T5 model
-                distractors = get_distractors_t5(
+                # Generate distractors based on the selected option
+                if option_3 == 's2v':
+                    distractors = get_distractors(keyword, s2v)
+                elif option_3 == 't5-llm':
+                    distractors = get_distractors_t5(
                         question=question,
                         answer=keyword,
                         context=context,
                         model=dis_model,
                         tokenizer=dis_tokenizer
                     )
+                else:
+                    distractors = []  # Fallback if no valid option selected
 
                 # Store the question and distractors for the keyword
                 questions_dict[keyword] = question
@@ -80,7 +85,10 @@ def generate_mcq(request):
                     }
                 )
 
-            # Step 5: Prepare data to be sent to the result template
+            # Save mcq_list in the session
+            request.session['mcq_list'] = mcq_list
+
+            # Prepare data to be passed to the template
             result_data = {
                 "context": context,
                 # "summary_text": summary_text,
@@ -93,3 +101,29 @@ def generate_mcq(request):
         form = InputForm()
 
     return render(request, "quesGens/index.html", {"form": form})
+
+def download_pdf(request):
+    mcq_list = request.session.get('mcq_list')
+    
+    # Check if mcq_list is available
+    if not mcq_list:
+        return render(request, "quesGens/error.html", {"error": "No MCQs found to download as PDF."})
+
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+
+    y_position = height - 50
+    for mcq in mcq_list:
+        p.drawString(100, y_position, f"Question: {mcq['question']}")
+        y_position -= 20
+        for option in mcq['options']:
+            p.drawString(120, y_position, f"- {option}")
+            y_position -= 15
+        y_position -= 30
+
+    p.showPage()
+    p.save()
+    buffer.seek(0)
+
+    return FileResponse(buffer, as_attachment=True, filename="mcqs.pdf")

@@ -5,7 +5,7 @@ trained_tokenizer = "apps/t5/tokenizer"
 
 # Load the model and tokenizer
 question_model = T5ForConditionalGeneration.from_pretrained(trained_model_path)
-question_tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer)
+question_tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer, legacy=False)
 
 def get_question(context, answer, model, tokenizer):
     text = "context: {} answer: {}".format(context, answer)

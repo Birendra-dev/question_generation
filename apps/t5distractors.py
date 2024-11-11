@@ -6,7 +6,7 @@ trained_tokenizer_path = os.path.join(base_dir, "race_distractors", "tokenizer")
 trained_model_path = os.path.join(base_dir, "race_distractors", "model")
 
 # Load the tokenizer and model from local paths
-dis_tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer_path, legacy=True)
+dis_tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer_path, legacy=False)
 dis_model = T5ForConditionalGeneration.from_pretrained(trained_model_path)
 
 def get_distractors_t5(question, answer, context, tokenizer, model, max_distractors=5):
