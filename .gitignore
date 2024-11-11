@@ -21,6 +21,7 @@ s2v_old/
 t5/
 en_core_web_sm/
 race_distractors/
+base-distilbert/
 
 # Jupiter notebook
 .ipynb_checkpoints/

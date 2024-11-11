@@ -10,7 +10,7 @@ from apps.summarization import summarizer, summary_model, summary_tokenizer
 
 from apps.raceKeyword import get_keywords_rake
 from apps.t5distractors import get_distractors_t5, dis_model, dis_tokenizer
-
+from apps.distKeyword import extract_keywords
 from .forms import InputForm
 
 
@@ -26,12 +26,13 @@ def generate_mcq(request):
             # summary_text = summarizer(context, summary_model, summary_tokenizer)
 
             # Step 2: Extract keywords from original context and summarized text
-            # keywords = get_keywords(context, summary_text, num_keywords)
-            keywords = get_keywords_rake(context, num_keywords)
+            # keywords = get_keywords(context, summary_text, num_keywords) 
+            # keywords = get_keywords_rake(context, num_keywords) # Extract keywords using RAKE
+            keywords = extract_keywords(context, num_keywords=num_keywords) # Extract keywords using PEFT
 
             distractors_dict = {}
             questions_dict = {}  # Store questions for each keyword
-            print(type(keywords))
+            print(keywords)
             # Step 3: Generate questions and distractors
             for keyword in keywords:
                 question = get_question(
