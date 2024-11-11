@@ -2,15 +2,15 @@ import random
 
 from django.shortcuts import render
 
-from apps.distractors import get_distractors, s2v
+from apps.s2vdistractors import get_distractors, s2v
+from apps.summarization import summarizer, summary_model, summary_tokenizer
 from apps.keywordExtraction import get_keywords
 from apps.questionGeneration import get_question, question_model, question_tokenizer
-from apps.summarization import summarizer, summary_model, summary_tokenizer
 
 
-from apps.raceKeyword import get_keywords_rake
+from apps.rakeKeyword import get_keywords_rake
 from apps.t5distractors import get_distractors_t5, dis_model, dis_tokenizer
-from apps.distKeyword import extract_keywords
+from apps.distilBERTKeyword import extract_keywords
 from .forms import InputForm
 
 
@@ -21,28 +21,32 @@ def generate_mcq(request):
             context = form.cleaned_data["context"]
             # option to select the number of keywords
             num_keywords = int(form.cleaned_data["num_keywords"])
+            
+            ## Step 1: Extract keywords from the context
+            # option 1: by summarizing the context and using spacy
+            summary_text = summarizer(context, summary_model, summary_tokenizer)
+            keywords = get_keywords(context, summary_text, num_keywords) 
 
-            # Step 1: Summarize the context
-            # summary_text = summarizer(context, summary_model, summary_tokenizer)
+            # option 2: by extracting keywords from the context using RAKE
+            # keywords = get_keywords_rake(context, num_keywords)
 
-            # Step 2: Extract keywords from original context and summarized text
-            # keywords = get_keywords(context, summary_text, num_keywords) 
-            # keywords = get_keywords_rake(context, num_keywords) # Extract keywords using RAKE
-            keywords = extract_keywords(context, num_keywords=num_keywords) # Extract keywords using PEFT
+            # option 3: by extracting keywords from the context using DistilBERT
+            # keywords = extract_keywords(context, num_keywords=num_keywords)
 
             distractors_dict = {}
             questions_dict = {}  # Store questions for each keyword
-            print(keywords)
-            # Step 3: Generate questions and distractors
+
+            # Step 2: Generate questions and distractors
             for keyword in keywords:
                 question = get_question(
                     context, keyword, question_model, question_tokenizer
-                )  # Generate question based on the summary
-
+                )
+                #option 1: distractors using s2v
                 # distractors = get_distractors(
                 #     keyword, s2v
                 # )  # Generate distractors for the keyword
 
+                #option 2: distractors using T5
                 # Generate distractors using the T5 model
                 distractors = get_distractors_t5(
                         question=question,

@@ -8,12 +8,14 @@ import spacy
 from flashtext import KeywordProcessor
 from nltk.corpus import stopwords
 
-# Check if NLTK stopwords are already downloaded
+# Set custom NLTK data path
+nltk.data.path.append('D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
+
+# Ensure required nltk resources are available
 try:
-    nltk.data.find("corpora/stopwords")
+    nltk.data.find('corpora/stopwords')
 except LookupError:
-    print("Stopwords not found. Downloading...")
-    nltk.download("stopwords")
+    nltk.download('stopwords', download_dir='D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
 
 # Check if spaCy model is downloaded
 try:
