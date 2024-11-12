@@ -10,7 +10,7 @@ hello.py
 
 # Virtual environments
 .venv
-
+apps
 # Database
 *.sqlite3
 

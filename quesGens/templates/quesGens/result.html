@@ -1,45 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MCQ Generator - Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h2 {
-            color: #333;
-        }
-        .mcq {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .mcq strong {
-            font-size: 18px;
-        }
-        .mcq ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .mcq ul li {
-            background-color: #fafafa;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 3px;
-            border: 1px solid #ddd;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <h2>Generated Multiple Choice Questions (MCQs)</h2>
-
+<button class="copy-btn" onclick="copyQuestions()">Copy All</button>
+<button id="loginBtn" class="download-btn login-btn" onclick="downloadPDF()">Download PDF</button>
 {% if mcq_list %}
     {% for mcq in mcq_list %}
         <div class="mcq">
@@ -54,6 +27,154 @@
 {% else %}
     <p>No MCQs generated. Please try again with different input.</p>
 {% endif %}
+
+
+
+<!-- Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'Login')">Login</button>
+            <button class="tablinks" onclick="openTab(event, 'Register')">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="Login" class="tabcontent" style="display: block;">
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" name="email" required>
+
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" required>
+
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Register Form -->
+        <div id="Register" class="tabcontent">
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                <label for="register-email">Email:</label>
+                <input type="email" id="register-email" name="email" required>
+
+                <label for="register-password">Password:</label>
+                <input type="password" id="register-password" name="password" required>
+
+                <label for="register-confirm-password">Confirm Password:</label>
+                <input type="password" id="register-confirm-password" name="confirm_password" required>
+
+                <button type="submit" class="submit-btn1">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+        const modal = document.getElementById("loginModal");
+        const loginBtn = document.getElementById("loginBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        loginBtn.onclick = () => {
+            modal.style.display = "flex";
+        };
+
+        closeBtn.onclick = () => {
+            modal.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            const tablinks = document.getElementsByClassName("tablinks");
+
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+
+
+    function copyQuestions() {
+        let textToCopy = "";
+        
+        document.querySelectorAll(".mcq").forEach((mcqElement) => {
+            // Capture the question text
+            const questionText = mcqElement.querySelector("p").textContent.trim();
+            textToCopy += questionText + "\n";
+            
+            // Capture each option
+            const options = Array.from(mcqElement.querySelectorAll("li")).map(li => "- " + li.textContent).join("\n");
+            //  Array.from(_) converts this NodeList returned by querySelectorAll into an actual array. This allows us to use array methods like .map().
+            textToCopy += options + "\n\n";
+        });
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert("All questions copied to clipboard!");
+        }).catch(err => {
+            alert("Failed to copy text: ", err);
+        });
+    }
+
+
+
+    async function downloadPDF() {
+        const response = await fetch("{% url 'is_logged_in' %}");
+        const data = await response.json();
+
+        if (!data.logged_in) {
+        // If the user is not logged in, show the login modal
+        modal.style.display = "flex"; // Show the modal
+        }
+
+        else{
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        let yOffset = 10;
+        
+        document.querySelectorAll(".mcq").forEach((mcqElement, index) => {
+            const questionText = mcqElement.querySelector("p").textContent.trim();
+            doc.text(questionText, 10, yOffset);
+            yOffset += 10;
+            
+            const options = Array.from(mcqElement.querySelectorAll("li")).map(li => li.textContent);
+            options.forEach(option => {
+                doc.text("- " + option, 20, yOffset);
+                yOffset += 10;
+            });
+            
+            yOffset += 10; // Add space between questions
+            
+            // Check for page overflow
+            if (yOffset > 270) {
+                doc.addPage();
+                yOffset = 10;
+            }
+        });
+        
+        // Save the PDF
+        doc.save("Generated_MCQs.pdf");
+    }
+}
+</script>
 
 </body>
 </html>

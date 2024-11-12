@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% load static %}
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,9 +53,163 @@
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}  <!-- This renders the form fields including num_keywords -->
+    {{ form.as_p }}  
+      This renders the form fields including num_keywords
     <button type="submit">Generate MCQs</button>
 </form>
 
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Generator</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>MCQ Generator</h2>
+        <button id="loginBtn" class="login-btn">Login</button>
+    </div>
+
+    <h2>Enter Text and Number of Keywords to Generate MCQs</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <!-- This renders the form fields including num_keywords -->
+        <button type="submit">Generate MCQs</button>
+    </form>
+
+    <!-- Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'Login')">Login</button>
+                <button class="tablinks" onclick="openTab(event, 'Register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="Login" class="tabcontent" style="display: block;">
+                <form id="Loginform" action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="email" required>
+
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password" required>
+
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="Register" class="tabcontent">
+                <form id="Registerform" action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" name="email" required>
+
+                    <label for="register-password">Password:</label>
+                    <input type="password" id="register-password" name="password" required>
+
+                    <label for="register-confirm-password">Confirm Password:</label>
+                    <input type="password" id="register-confirm-password" name="confirm_password" required>
+
+                    <button type="submit" class="submit-btn1">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Open and close modal
+        const modal = document.getElementById("loginModal");
+        const loginBtn = document.getElementById("loginBtn");
+        const closeBtn = document.querySelector(".close-btn");
+
+        loginBtn.onclick = () => {
+            modal.style.display = "flex";
+        };
+
+        closeBtn.onclick = () => {
+            modal.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            const tablinks = document.getElementsByClassName("tablinks");
+
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+
+    // AJAX for Login Form
+    document.querySelector("#Loginform").onsubmit = async function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+    const response = await fetch("{% url 'login' %}", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+    });
+    const data = await response.json();
+    if (data.success) {
+        alert(data.message); // Display success message
+        modal.style.display = "none"; // Close the modal
+        location.reload(); // Reload page to reflect logged-in state
+    } else {
+        alert(data.message); // Display error message
+    }
+};
+
+// AJAX for Registration Form
+    document.querySelector("#Registerform").onsubmit = async function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+    const response = await fetch("{% url 'register' %}", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
+    });
+    const data = await response.json();
+    if (data.success) {
+        alert(data.message); // Display success message
+        modal.style.display = "none"; // Close the modal
+        location.reload(); // Reload page to reflect logged-in state
+    } else {
+        alert(data.message); // Display error message
+    }
+};
+
+    </script>
+
+</body>
+
 </html>
