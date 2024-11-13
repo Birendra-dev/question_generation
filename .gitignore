@@ -18,7 +18,9 @@ hello.py
 bart-large-cnn/
 msmarco-distilbert-base-v3/
 s2v_old/
+glove.6B.300d.txt
 t5/
+s2v_reddit_2019_lg/
 en_core_web_sm/
 race_distractors/
 base-distilbert/

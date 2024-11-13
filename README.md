@@ -23,3 +23,4 @@ For downloading model, visit Telegram or DM me in Telegram.
 ---
 *Note: UV package manager is recommended for better performance and dependency management.*
 ```
+<!-- python -m spacy download en-core-web-sm -->
