@@ -7,8 +7,8 @@
   uv sync 
 
 for download model visit telegram or DM me in telegram
-
-
+<!-- uv add pip -->
+<!-- python -m spacy download en_core_web_sm -->
 
 <!-- Once upon a time, in a vast jungle, there lived an ant named Arlo and an elephant named Ella. Arlo was small, quick, and full of energy, while Ella was large, strong, and kind-hearted. Despite their size differences, the two were the best of friends.
 

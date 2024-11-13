@@ -5,7 +5,7 @@ from .forms import InputForm
 from apps.questionGeneration import get_question, question_model, question_tokenizer
 from apps.summarization import summarizer, summary_model, summary_tokenizer
 from apps.keywordExtraction import get_keywords
-from apps.distractors import get_distractors,glove_model
+from apps.distractors import get_distractors
 from django.contrib.auth.models import User
 # django bydefault give user models.if we dont want to add additional feilds it is better to use it
 from django.contrib import messages
@@ -39,7 +39,22 @@ import random
 #     }
 
 #     return render(request, 'quesGens/result.html', result_data)
-
+# def generate_mcq(request):
+#     try:
+#         # Initialize sense2vec with optimized memory settings
+#         # from sense2vec import Sense2Vec
+#         # s2v = Sense2Vec().from_disk('path_to_your_s2v_model')
+        
+#         # Get your words list
+#         words = [...] # Your list of words
+        
+#         # Process in batches
+#         distractors = batch_process_distractors(words, s2v)
+        
+#         return JsonResponse({'success': True, 'data': distractors})
+        
+#     except Exception as e:
+#         return JsonResponse({'success': False, 'error': str(e)})
 
 def generate_mcq(request):
     if request.method == 'POST':
@@ -62,7 +77,24 @@ def generate_mcq(request):
             for keyword in keywords:
                 question = get_question(summary_text, keyword, question_model, question_tokenizer)  # Generate question based on the summary
                 # distractors = get_distractors(keyword, s2v)  # Generate distractors for the keyword
-                distractors= get_distractors(keyword,glove_model)
+                distractors = get_distractors(keyword) 
+                # try:
+                #         # Initialize sense2vec with optimized memory settings
+                #         # from sense2vec import Sense2Vec
+                #         # s2v = Sense2Vec().from_disk('path_to_your_s2v_model')
+                        
+                #         # Get your words list
+                #         words = [...] # Your list of words
+                        
+                #         # Process in batches
+                #         distractors = batch_process_distractors(keyword, s2v)
+                #         questions_dict[keyword] = question
+                #         distractors_dict[keyword] = distractors
+                #         return JsonResponse({'success': True, 'data': distractors})
+                        
+                # except Exception as e:
+                #         return JsonResponse({'success': False, 'error': str(e)})
+                # distractors= get_distractors(keyword,glove_model)
                 # Store the question and distractors for the keyword
                 questions_dict[keyword] = question
                 distractors_dict[keyword] = distractors
@@ -159,10 +191,10 @@ def is_logged_in(request):
     return JsonResponse({'logged_in': request.user.is_authenticated})
 # quesGens/views.py
 
-from django.http import HttpResponseForbidden
+# from django.http import HttpResponseForbidden
 
-def csrf_failure_view(request, reason=""):
-    return HttpResponseForbidden("CSRF verification failed. Please try again.")
+# def csrf_failure_view(request, reason=""):
+#     return HttpResponseForbidden("CSRF verification failed. Please try again.")
 
 
 

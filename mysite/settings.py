@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-d7j=ri7m1j6xi89bi)7j8syk8-z!+-#lon+1qn@kzcyxufy3@g
 DEBUG = True
 
 ALLOWED_HOSTS = []
-CSRF_FAILURE_VIEW = 'quesGens.views.csrf_failure_view'
+# CSRF_FAILURE_VIEW = 'quesGens.views.csrf_failure_view'
 
 
 # Application definition
