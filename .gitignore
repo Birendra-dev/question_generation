@@ -7,6 +7,7 @@ wheels/
 *.egg-info
 migrations/
 hello.py
+test.py
 
 # Virtual environments
 .venv
@@ -22,6 +23,7 @@ t5/
 en_core_web_sm/
 race_distractors/
 base-distilbert/
+
 
 # Jupiter notebook
 .ipynb_checkpoints/

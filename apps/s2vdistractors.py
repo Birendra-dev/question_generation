@@ -1,43 +1,73 @@
 import os
 
+import nltk
+from nltk.corpus import wordnet as wn
 from sense2vec import Sense2Vec
 
-# Get the base directory where the script is located
+# Configure NLTK to use a custom data directory
+NLTK_DATA_DIR = 'D:\\Files\\question_answering\\.venv\\Lib\\nltk_data'
+nltk.data.path.append(NLTK_DATA_DIR)
+
+# Check for WordNet and download if not present
+try:
+    nltk.data.find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet', download_dir=NLTK_DATA_DIR)
+
+# Load Sense2Vec model
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Construct the absolute path to the model directory
 S2V_MODEL_PATH = os.path.join(BASE_DIR, "s2v_old")
-
-# Load Sense2Vec model using the absolute path
 s2v = Sense2Vec().from_disk(S2V_MODEL_PATH)
 
-
-def get_distractors(word, s2v):
-    similarWords = set()  # Using a set to avoid duplicates
-    word = word.lower().replace(" ", "_")
+# Function to generate distractors using Sense2Vec
+def get_distractors_s2v(answer, s2v_model):
+    distractors = set()
+    word = answer.lower().replace(" ", "_")
     try:
-        # Attempt to get the best sense of the word
-        sense = s2v.get_best_sense(word)
-        if sense is None:
-            return ["No distractors found"]  # Return a message if no sense is found
-        
-        # Get most similar words if a sense is found
-        most_similar = s2v.most_similar(sense, n=5)
-        for each_word in most_similar:
-            clean_word = each_word[0].split("|")[0].replace("_", " ")
-            similarWords.add(clean_word)  # Add to set, which ensures uniqueness
+        sense = s2v_model.get_best_sense(word)
+        if sense:
+            most_similar = s2v_model.most_similar(sense, n=5)
+            for similar_word, _ in most_similar:
+                clean_word = similar_word.split("|")[0].replace("_", " ")
+                if clean_word.lower() != answer.lower():
+                    distractors.add(clean_word)
     except KeyError:
-        return ["No distractors found"]
+        pass
+    return list(distractors)[:3]
 
-    # Remove the original word from the distractors if it's present
-    if word.replace("_", " ") in similarWords:
-        similarWords.remove(word.replace("_", " "))
+# Function to generate distractors using WordNet
+def get_distractors_wordnet(answer):
+    distractors = set()
+    for syn in wn.synsets(answer):
+        for lemma in syn.lemmas():
+            word = lemma.name().replace("_", " ")
+            if word.lower() != answer.lower():
+                distractors.add(word)
+            if len(distractors) >= 3:
+                break
+        if len(distractors) >= 3:
+            break
+    return list(distractors)[:3]
 
-    # Convert the set back to a list and return the first 3 distinct distractors
-    return list(similarWords)[:3]
+# Combined function to generate distractors
+def generate_distractors(answer, s2v_model):
+    # First, try Sense2Vec
+    distractors = get_distractors_s2v(answer, s2v_model)
+    
+    # If fewer than 3 distractors are found, use WordNet to supplement
+    if len(distractors) < 3:
+        additional_distractors = get_distractors_wordnet(answer)
+        combined_distractors = distractors + [d for d in additional_distractors if d not in distractors]
+        distractors = combined_distractors[:3]
+    
+    # Ensure we have 3 distractors
+    if len(distractors) < 3:
+        print("Warning: Could not find 3 distinct distractors.")
+    
+    return distractors
 
-
-
+# Example usage
 if __name__ == "__main__":
-    print(get_distractors("Nepal", s2v))
-    print(type(get_distractors("Python", s2v)))
+    answer = "bitcoin"
+    distractors = generate_distractors(answer, s2v)
+    print("Generated Distractors:", distractors)

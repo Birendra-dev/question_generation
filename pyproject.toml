@@ -8,6 +8,7 @@ dependencies = [
     "django>=4.2.16",
     "flashtext==2.7",
     "huggingface-hub>=0.26.1",
+    "langchain-ollama>=0.2.0",
     "peft>=0.13.2",
     "pke",
     "protobuf>=5.28.3",

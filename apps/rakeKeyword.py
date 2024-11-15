@@ -1,5 +1,5 @@
-from rake_nltk import Rake
 import nltk
+from rake_nltk import Rake
 
 # Set custom NLTK data path
 nltk.data.path.append('D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')

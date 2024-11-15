@@ -1,5 +1,6 @@
-from transformers import T5ForConditionalGeneration, T5Tokenizer
 import os
+
+from transformers import T5ForConditionalGeneration, T5Tokenizer
 
 base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of `t5distractors.py`
 trained_tokenizer_path = os.path.join(base_dir, "race_distractors", "tokenizer")

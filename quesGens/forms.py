@@ -1,6 +1,5 @@
 from django import forms
 
-
 CHOICES_QA = [
     ('general', 'General'),
     ('science', 'Science'),
@@ -13,6 +12,7 @@ CHOICES_Key = [
 CHOICES_Distractors = [
     ('s2v', 'Sense2Vec'),
     ('t5-llm', 'LLM T5'),
+    ('llama', 'LLAMA'),
 ]
 
 class InputForm(forms.Form):

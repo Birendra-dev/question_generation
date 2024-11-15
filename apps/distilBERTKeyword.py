@@ -1,8 +1,9 @@
 import os
+
 import numpy as np
-from transformers import AutoTokenizer, AutoModelForTokenClassification
-from transformers.pipelines import TokenClassificationPipeline, AggregationStrategy
 from peft import PeftConfig, PeftModel
+from transformers import AutoModelForTokenClassification, AutoTokenizer
+from transformers.pipelines import AggregationStrategy, TokenClassificationPipeline
 
 base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of `t5distractors.py`
 base_tokenizer_path = os.path.join(base_dir, "base-distilBERT", "tokenizer")
@@ -59,8 +60,9 @@ def extract_keywords(text, num_keywords=None, device='cpu'):
 if __name__ == "__main__":
     # Example text for extraction
     text = """
-    Nepal is a landlocked country in South Asia, nestled between China to the north and India to the south, east, and west.
-    Known for its stunning natural beauty, Nepal is home to eight of the world's ten highest mountains, including Mount Everest.
+    In a village, lived a carefree boy with his father. The boy’s father told him that he was old enough to watch over the sheep while they graze in the fields. Every day, he had to take the sheep to the grassy fields and watch them as they graze. However, the boy was unhappy and didn’t want to take the sheep to the fields. He wanted to run and play, not watch the boring sheep graze in the field. So, he decided to have some fun. He cried, “Wolf! Wolf!” until the entire village came running with stones to chase away the wolf before it could eat any of the sheep. When the villagers saw that there was no wolf, they left muttering under their breath about how the boy had wasted their time. The next day, the boy cried once more, “Wolf! Wolf!” and, again, the villagers rushed there to chase the wolf away.
+
+    The boy laughed at the fright he had caused. This time, the villagers left angrily. The third day, as the boy went up the small hill, he suddenly saw a wolf attacking his sheep. He cried as hard as he could, “Wolf! Wolf! Wolf!”, but not a single villager came to help him. The villagers thought that he was trying to fool them again and did not come to rescue him or his sheep. The little boy lost many sheep that day, all because of his foolishness.
     """
     
     # Extract keywords

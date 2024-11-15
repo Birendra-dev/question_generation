@@ -1,6 +1,4 @@
 import os
-import string
-import traceback
 
 import nltk
 import pke
@@ -27,64 +25,51 @@ except OSError:
     nlp = spacy.load("en_core_web_sm")
 
 
+
 def get_nouns_multipartite(content):
     """
     Extract top-ranked noun phrases from the content using the MultipartiteRank algorithm.
     """
-    out = []
     try:
+        # Initialize the extractor
         extractor = pke.unsupervised.MultipartiteRank()
         extractor.load_document(input=content, language="en", spacy_model=nlp)
 
-        # Define parts of speech to include in candidates
-        pos = {"PROPN", "NOUN"}
+        # Candidate selection: Include only proper nouns and nouns
+        extractor.candidate_selection(pos={"PROPN", "NOUN"})
 
-        # Build stoplist
-        stoplist = list(string.punctuation)
-        stoplist += ["-lrb-", "-rrb-", "-lcb-", "-rcb-", "-lsb-", "-rsb-"]
-        stoplist += stopwords.words("english")
-
-        # Candidate selection (the stoplist is not passed, could be added)
-        extractor.candidate_selection(pos=pos)
-
-        # Weighting candidates using random walk (MultipartiteRank)
+        # Weight candidates using MultipartiteRank
         extractor.candidate_weighting(alpha=1.1, threshold=0.75, method="average")
 
         # Extract top 15 keyphrases
-        keyphrases = extractor.get_n_best(n=15)
-
-        # Append the phrases to the output list
-        out = [val[0] for val in keyphrases]
-    except Exception:
-        traceback.print_exc()
-        out = []
-
-    return out
+        return [phrase for phrase, _ in extractor.get_n_best(n=15)]
+    except Exception as e:
+        print(f"Error in MultipartiteRank extraction: {e}")
+        return []
 
 
-def get_keywords(originaltext, summarytext, num_keywords=4):
+def get_keywords(original_text, summary_text, num_keywords=4):
     """
-    Extract keywords from original text and match them with the summary text.
+    Extract and match keywords between original text and summary text.
     """
-    # Extract keywords using the get_nouns_multipartite function
-    keywords = get_nouns_multipartite(originaltext)
+    # Extract keywords using MultipartiteRank
+    keywords = get_nouns_multipartite(original_text)
     print("Keywords (unsummarized):", keywords)
 
-    # Use flashtext KeywordProcessor to search keywords in the summary text
+    # Initialize KeywordProcessor
     keyword_processor = KeywordProcessor()
-    for keyword in keywords:
-        keyword_processor.add_keyword(keyword)
+    keyword_processor.add_keywords_from_list(keywords)
 
-    # Extract keywords found in the summary
-    keywords_found = keyword_processor.extract_keywords(summarytext)
-    keywords_found = list(set(keywords_found))  # Remove duplicates
+    # Extract matched keywords in the summary text
+    keywords_found = set(keyword_processor.extract_keywords(summary_text))
     print("Keywords found in summary:", keywords_found)
 
-    # Select important keywords that appear in both original and summarized text
+    # Filter keywords to include only those appearing in both original and summary
     important_keywords = [keyword for keyword in keywords if keyword in keywords_found]
 
-    # Return the top 4 important keywords
+    # Return the top `num_keywords` important keywords
     return important_keywords[:num_keywords]
+
 
 if __name__ == "__main__":
     # Sample text
@@ -95,7 +80,7 @@ if __name__ == "__main__":
     but the tree showered him with hundreds of needles"""
     summary_text = "Two brothers, older mean to younger. Older chops firewood, finds magical tree with golden apples. Disappointed, cuts tree, gets needles."
 
-    # Extract keywords from the original text and summary
+    # Extract keywords
     keywords = get_keywords(original_text, summary_text, num_keywords=5)
     print("Keywords:", keywords)
     print(type(keywords))
