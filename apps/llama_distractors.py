@@ -12,7 +12,8 @@ def generate_distractors_llama(context: str, question: str, answer: str) -> list
     - Be similar in length to the correct answer
     - Be related to the topic but clearly incorrect
     - Not be obviously wrong or humorous
-    - Be unique from each other"""
+    - Be unique from each other
+    - Follow a similar structure each time"""
         },
         {
             "role": "user",
