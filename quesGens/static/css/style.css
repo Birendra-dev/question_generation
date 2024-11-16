@@ -283,6 +283,7 @@ h2 {
 .dropdown {
     position: relative;
     display: inline-block;
+    
 }
 
 .download-btn {
@@ -304,7 +305,7 @@ h2 {
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 40px;
+    /* top: 40px; */
     right: 0;
     background-color: #fff;
     border: 1px solid #ddd;
