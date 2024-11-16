@@ -11,7 +11,6 @@
             <span class="tooltip">Show Answer</span>
         </button>
         <button class="copy-btn" onclick="copyQuestions()">Copy All</button>
-        <!-- <button class="download-btn" onclick="downloadPDF()">Download <i class="fa-solid fa-download"></i></button> -->
         <div class="dropdown">
             <button class="download-btn" onclick="toggleDropdown()">Download <i class="fas fa-download"></i></button>
             <div id="dropdownMenu" class="dropdown-menu">
@@ -260,7 +259,6 @@
     function downloadFile(type) {
         // Implement download logic based on `type`
         console.log(`Download ${type.toUpperCase()} file`);
-        // Example: if (type === 'pdf') { ... }
     }
 
     function copyText() {
@@ -311,65 +309,3 @@
 
 </html>
 {% endblock %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCQ Generator - Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h2 {
-            color: #333;
-        }
-        .mcq {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .mcq strong {
-            font-size: 18px;
-        }
-        .mcq ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .mcq ul li {
-            background-color: #fafafa;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 3px;
-            border: 1px solid #ddd;
-        }
-    </style>
-</head>
-<body>
-
-<h2>Generated Multiple Choice Questions (MCQs)</h2>
-
-{% if mcq_list %}
-    {% for mcq in mcq_list %}
-        <div class="mcq">
-            <p><strong>Question {{ forloop.counter }}:</strong> {{ mcq.question }}</p>
-            <ul>
-                {% for option in mcq.options %}
-                    <li>{{ option }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>No MCQs generated. Please try again with different input.</p>
-{% endif %}
-
-<a href="{% url 'download_pdf' %}" class="btn btn-primary">Download MCQs as PDF</a>
-
-
-</body>
-</html> -->

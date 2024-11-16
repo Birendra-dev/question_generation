@@ -179,8 +179,6 @@
                     yOffset = 10;
                 }
             });
-
-            // Save the PDF
             doc.save("Generated_MCQs.pdf");
         }
     }
@@ -242,7 +240,6 @@
     function downloadFile(type) {
         // Implement download logic based on `type`
         console.log(`Download ${type.toUpperCase()} file`);
-        // Example: if (type === 'pdf') { ... }
     }
 
     function copyText() {
@@ -250,7 +247,7 @@
         console.log("Copy text to clipboard");
     }
 
-    // Close the dropdown if the user clicks outside of it
+    // Close the dropdown if the user clicks outside of the button
     window.onclick = function (event) {
         if (!event.target.closest('.download-btn')) {
             const dropdownMenu = document.getElementById("dropdownMenu");
@@ -263,7 +260,7 @@
 
     function toggleIcon() {
         const eyeIcon = document.getElementById("eyeIcon");
-        // Toggle between eye and eye-slash icons
+        // for toggling
         if (eyeIcon.classList.contains("fa-eye-slash")) {
             eyeIcon.classList.remove("fa-eye-slash");
             eyeIcon.classList.add("fa-eye");
