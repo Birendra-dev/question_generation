@@ -267,4 +267,3 @@ def delete_history(request, entry_id):
     
     # Redirect to the history page
     return redirect('history')
-all hail the king
