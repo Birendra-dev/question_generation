@@ -1,0 +1,31 @@
+{% extends 'quesGens/base.html' %}
+{% block content %}
+<main>
+    <div class="container">
+        <h2>Test Your Knowledge</h2>
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            {% for mc in mc_list %}
+            <div class="mcq">
+                {{ mcq }}
+                <p> <strong>Question {{ forloop.counter }}:</strong> {{ mc.question }}</p>
+
+                <ul>
+                    {% for option in mc.options %}
+                    <li>
+                        <input type="radio" name="option_{{ forloop.parentloop.counter0 }}" value="{{ option }}">
+
+                        {{ option }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+</main>
+
+{% endblock %}

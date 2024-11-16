@@ -1,0 +1,356 @@
+form {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group {
+    padding: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+textarea:focus {
+    /* border:2px solid  #007bff; */
+    outline: none;
+}
+
+input[type="number"] {
+    width: 98%;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input[type="number"]:focus {
+    /* border:2px solid  #007bff; */
+    /* border: 1px solid blue; Blue border on focus */
+    outline: none;
+}
+
+#id_complexity {
+    padding: 8px 80px 8px 80px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+#id_complexity_helptext {
+    margin-left: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    /* background-color: #5cb85c; */
+    /* background-color:#1c59d6; */
+    background-color: #3569d3;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.logout-btn {
+    background-color: #3569d3;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header .login-btn {
+    background-color: #3569d3;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.loading-icon {
+    margin-left: 10px;
+    display: inline-block;
+    padding-right:10px;
+}
+.loading-icon i{
+    font-size:20px;
+}
+/* =================================================================[LOGIN-REGISTRATION-FORM]================================================================================== */
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* padding:10px; */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    height: 350px;
+    width: 500px;
+    /* border-radius: 8px; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.4s;
+    padding: 20px;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.close-btn {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+/* Tab Styles */
+.tab {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab button {
+    flex: 1;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #ddd;
+    font-weight: bold;
+    color: #333;
+}
+
+.tab button.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Form Styles in Modal */
+.tabcontent {
+    display: none;
+}
+
+.tabcontent form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 8px 0 4px;
+}
+
+form input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-btn {
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.submit-btn1 {
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+h2 {
+    /* color: #333; */
+    color: #425bca;
+}
+
+/* ====================================================================[MCQ's RESULT]============================================================================================ */
+.mcq {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.mcq strong {
+    font-size: 18px;
+}
+
+.mcq ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.mcq ul li {
+    background-color: #fafafa;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+
+
+.toggle-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+
+}
+
+/* .toggle-icon-btn:focus {
+    outline: none;
+} */
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    background-color: #007bff;
+    /* Bluish background */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toggle-icon-btn:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.copy-btn,
+.download-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.copy-btn:hover,
+.download-btn:hover {
+    background-color: #45a049;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.download-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.download-btn i {
+    margin-left: 5px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.account-img {
+    height: 100px;
+}
+
+.rounded-circle {
+    border-radius: 100%;
+}
+/* ============================================================[MCQ-TEST]============================================================================================== */
+input[type="radio"] {
+    transform: scale(1.5); 
+    margin-right: 10px; 
+    accent-color: blue;
+}
+input[type="radio"]:checked {
+    background-color: blue;
+    border-color: blue;
+    color:blue;
+}
+input[type="radio"]:not(:checked) {
+    border: 2px solid #ccc;
+    background-color: white;
+}

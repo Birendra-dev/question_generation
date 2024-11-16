@@ -1,6 +1,6 @@
 from django import forms
-
-
+from django.contrib.auth.models import User
+from .models import Profile
 CHOICES_QA = [
     ('general', 'General'),
     ('science', 'Science'),
@@ -17,6 +17,11 @@ CHOICES_Distractors = [
 
 class InputForm(forms.Form):
     context = forms.CharField(widget=forms.Textarea, label="Context")
+    pdf_file = forms.FileField(
+        label="Upload PDF",
+        help_text="Upload a PDF file for content extraction",
+        required=False,  # Make it optional if the user can fill out the context manually
+    )
     num_keywords = forms.IntegerField(
         label="Number of Keywords",
         min_value=1,
@@ -47,3 +52,20 @@ class InputForm(forms.Form):
         self.fields['option_1'].initial = 'general'  # Match the key in CHOICES_Key
         self.fields['option_2'].initial = 'rake'   # Match the key in CHOICES_Distractors
         self.fields['option_3'].initial = 's2v'
+    def clean_pdf_file(self):
+        pdf_file = self.cleaned_data.get("pdf_file")
+        if pdf_file and not pdf_file.name.endswith(".pdf"):
+            raise forms.ValidationError("Only PDF files are allowed.")
+        return pdf_file
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username','email']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']

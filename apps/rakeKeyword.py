@@ -1,6 +1,6 @@
 from rake_nltk import Rake
 import nltk
-
+# nltk.download('averaged_perceptron_tagger_eng')
 # Set custom NLTK data path
 nltk.data.path.append('D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
 

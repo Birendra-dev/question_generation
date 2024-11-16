@@ -23,4 +23,13 @@ For downloading model, visit Telegram or DM me in Telegram.
 ---
 *Note: UV package manager is recommended for better performance and dependency management.*
 ```
-<!-- python -m spacy download en-core-web-sm -->
+<!-- python -m ensurepip --upgrade -->
+<!-- pip install spacy -->
+
+<!-- python -m spacy download en_core_web_sm -->
+
+<!-- clear and rebuild database -->
+rm db.sqlite3
+python manage.py migrate
+
+<!-- anuj anuj@gmail.com anuj1234 -->
