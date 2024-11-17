@@ -93,7 +93,19 @@ button {
 .loading-icon i {
     font-size: 20px;
 }
-
+.context-btn{
+    font-size:17px; 
+    font-weight: bold; 
+    background-color:white;
+    color:green;
+    border-radius: 20px; 
+    border: 1px solid green;
+}
+.context-btn:hover{
+    background-color:#4CAF50;
+    color:#fff;
+    border:#fff;
+}
 /* =================================================================[LOGIN-REGISTRATION-FORM]================================================================================== */
 /* Modal Styles */
 .modal {
@@ -201,7 +213,9 @@ h2 {
     /* color: #333; */
     color: #425bca;
 }
-
+.extra{
+    width:200px;
+}
 /* ====================================================================[MCQ's RESULT]============================================================================================ */
 .mcq {
     background-color: #fff;

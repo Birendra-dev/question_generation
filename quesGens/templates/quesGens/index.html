@@ -12,7 +12,7 @@
                 <div class="dropdown">
                 <div style=" line-height: 54px; height: 50px;"><a href="#"><img onclick="toggleDropdown()" style="width: 50px; height: 50px; margin-left:50px;" class="rounded-circle account-img" src="{{ user.profile.image.url }}"></a>
                 </div>
-                <div id="dropdownMenu" class="dropdown-menu">
+                <div id="dropdownMenu" class="dropdown-menu extra">
                     <a href="#" class="dropdown-item" onclick="downloadFile('txt')"><i class="fa-solid fa-right-to-bracket"></i>   Login/Signup</a>
                     <hr>
                     <a href="#" class="dropdown-item" onclick="downloadPDF()"><i class="fa-solid fa-globe"></i>   English</a>
@@ -37,8 +37,8 @@
         <textarea id="context" name="context" rows="4" style="width: 100%; padding: 10px;"></textarea>
 
         <div class="buttons-container" style="position: absolute; top: 70px; right: 10px;">
-            <button style="font-size:17px; font-weight: bold; background-color:white; color:green; border-radius: 20px; border: 1px solid green;" type="button"><i class="fa-regular fa-file-lines"></i> Try Sample Text</button>
-            <button style="font-size:17px; font-weight: bold; background-color:white; color:green; border-radius: 20px; border: 1px solid green" type="button"> <i class="fa-regular fa-paste"></i> Paste Text</button>
+            <button class="context-btn" onclick="filltext()" type="button"><i class="fa-regular fa-file-lines"></i> Try Sample Text</button>
+            <button class="context-btn" type="button"> <i class="fa-regular fa-paste"></i> Paste Text</button>
         </div>
         <div class="filo">
             <input type="file" id="pdf_file" name="pdf_file" class="file-input" />
@@ -140,6 +140,24 @@
     function toggleDropdown() {
         const dropdownMenu = document.getElementById("dropdownMenu");
         dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+    }
+
+    function filltext(){
+        var sampletext=`Machine learning is a branch of artificial intelligence (AI) that enables systems to learn from data and make predictions or decisions without being explicitly programmed.
+         It involves the development of algorithms that can identify patterns and correlations in large datasets, enabling systems to improve their performance over time.
+          There are various types of machine learning, including supervised learning, where the model is trained on labeled data; unsupervised learning, where the model finds patterns in data without labeled examples; 
+          and reinforcement learning, where an agent learns by interacting with an environment and receiving feedback. Machine learning has a wide range of applications, 
+          from natural language processing and image recognition to predictive analytics and autonomous vehicles, revolutionizing industries by automating tasks and providing insights that were once difficult or impossible to uncover manually.`;
+    document.getElementById("context").value=sampletext;
+    }
+    
+    window.onclick = function (event) {
+        if (!event.target.closest('.dropdown')) {
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            if (dropdownMenu.style.display === "block") {
+                dropdownMenu.style.display = "none";
+            }
+        }
     }
 </script>
 </body>
