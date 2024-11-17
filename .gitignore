@@ -7,7 +7,7 @@ wheels/
 *.egg-info
 migrations/
 hello.py
-
+guide
 # Virtual environments
 .venv
 
