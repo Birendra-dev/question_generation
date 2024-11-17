@@ -290,6 +290,7 @@
             correctAnswers.forEach(answer => {
                 answer.style.fontWeight = 'bold';
                 answer.style.color = 'green';
+                answer.style.borderColor='green';
             });
         } else {
             eyeIcon.classList.remove('fa-eye');
@@ -299,6 +300,7 @@
             correctAnswers.forEach(answer => {
                 answer.style.fontWeight = 'normal';
                 answer.style.color = 'inherit';
+                answer.style.borderColor='';
             });
         }
     }
