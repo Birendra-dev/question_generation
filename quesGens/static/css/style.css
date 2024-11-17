@@ -87,11 +87,13 @@ button {
 .loading-icon {
     margin-left: 10px;
     display: inline-block;
-    padding-right:10px;
+    padding-right: 10px;
 }
-.loading-icon i{
-    font-size:20px;
+
+.loading-icon i {
+    font-size: 20px;
 }
+
 /* =================================================================[LOGIN-REGISTRATION-FORM]================================================================================== */
 /* Modal Styles */
 .modal {
@@ -283,7 +285,7 @@ h2 {
 .dropdown {
     position: relative;
     display: inline-block;
-    
+
 }
 
 .download-btn {
@@ -340,18 +342,47 @@ h2 {
 .rounded-circle {
     border-radius: 100%;
 }
+
 /* ============================================================[MCQ-TEST]============================================================================================== */
 input[type="radio"] {
-    transform: scale(1.5); 
-    margin-right: 10px; 
+    transform: scale(1.5);
+    margin-right: 10px;
     accent-color: blue;
 }
+
 input[type="radio"]:checked {
     background-color: blue;
     border-color: blue;
-    color:blue;
+    color: blue;
 }
+
 input[type="radio"]:not(:checked) {
     border: 2px solid #ccc;
     background-color: white;
+}
+
+.file-input {
+    display: none;
+    /* Hide the default file input */
+}
+
+/* Style the label to look like a button */
+.file-input-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    /* Green background */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Change background color on hover */
+.file-input-label:hover {
+    background-color: #45a049;
 }

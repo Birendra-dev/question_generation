@@ -31,8 +31,42 @@
 <br><br>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}  <!-- This renders the form fields including num_keywords -->
-    <button type="submit" id="generateBtn">
+    <div class="form-group" style="position: relative;">
+        <label for="context">Context</label>
+        <!-- The textarea -->
+        <textarea id="context" name="context" rows="4" style="width: 100%; padding: 10px;"></textarea>
+
+        <div class="buttons-container" style="position: absolute; top: 70px; right: 10px;">
+            <button style="font-size:17px; font-weight: bold; background-color:white; color:green; border-radius: 20px; border: 1px solid green;" type="button"><i class="fa-regular fa-file-lines"></i> Try Sample Text</button>
+            <button style="font-size:17px; font-weight: bold; background-color:white; color:green; border-radius: 20px; border: 1px solid green" type="button"> <i class="fa-regular fa-paste"></i> Paste Text</button>
+        </div>
+        <div class="filo">
+            <input type="file" id="pdf_file" name="pdf_file" class="file-input" />
+            <label for="pdf_file" class="file-input-label"><i class="fa-solid fa-cloud-arrow-up"></i> Upload pdf</label>
+            </div>
+    </div>
+<br>
+    {{ form.num_keywords.label_tag }}
+    {{ form.num_keywords }}
+    {{ form.num_keywords.help_text }}
+
+
+    <div>
+        {{ form.option_1.label_tag }}
+        {{ form.option_1 }}
+    </div>
+
+    <div>
+        {{ form.option_2.label_tag }}
+        {{ form.option_2 }}
+    </div>
+
+    <div>
+        {{ form.option_3.label_tag }}
+        {{ form.option_3 }}
+    </div>
+
+ <button type="submit" id="generateBtn">
         <span class="btn-text">Generate MCQs</span>
         <span class="loading-icon" style="display: none;">
             <i class="fa fa-spinner fa-spin"></i>
