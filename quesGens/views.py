@@ -84,16 +84,6 @@ def generate_mcq(request):
                 while len(options) < 4:
                   options.append("Placeholder") 
                 random.shuffle(options)
-            #     mcq = MCQ(
-            # question=question,
-            # correct_answer=correct_answer,
-            # option_1=options[0],
-            # option_2=options[1],
-            # option_3=options[2],
-            # option_4=options[3]
-            #     )
-            #     mcq.save()  # Save the MCQ to the database
-                # Append the MCQ to the list
                 mcq_list.append(
                     {
                         "question": question,
@@ -101,10 +91,7 @@ def generate_mcq(request):
                         "correct_answer": correct_answer,  # For verification purposes if needed
                     }
                 )
-                
-
-# Assuming `mcq_list` is your list of generated MCQs
-            MCQ.objects.create(user=request.user, mcqs=json.dumps(mcq_list))
+            MCQ.objects.create(user=request.user, mcqs=json.dumps(mcq_list))  #serialize dictionary,lists and store in json format in db
             result_data = {
                 "context": context,
                 "mcq_list": mcq_list,  # List of questions with options
