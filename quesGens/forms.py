@@ -16,7 +16,9 @@ CHOICES_Distractors = [
 ]
 
 class InputForm(forms.Form):
-    context = forms.CharField(widget=forms.Textarea, label="Context")
+    context = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Enter your context here...'}), 
+        label="Context")
     pdf_file = forms.FileField(
         label="Upload PDF",
         help_text="Upload a PDF file for content extraction",

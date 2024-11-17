@@ -230,7 +230,6 @@ def test(request):
 def history(request):
     # Fetch all MCQ entries for the logged-in user
     mcq_entries = MCQ.objects.filter(user=request.user).order_by('-created_at')
-    print(mcq_entries)
     # Convert JSON field data into Python objects
     history_data = []
     for entry in mcq_entries:
@@ -241,7 +240,6 @@ def history(request):
             "mcqs": mcqs,
             "created_at": entry.created_at,
         })
-    print(history_data)
     # Pass the history data to the template
     return render(request, "quesGens/history.html", {"history_data": history_data})
 @login_required
