@@ -1,27 +1,31 @@
-import nltk
-from nltk.corpus import stopwords
-import string
-import pke
-import traceback
-from flashtext import KeywordProcessor
-import spacy
 import os
+import string
+import traceback
 
-# Check if NLTK stopwords are already downloaded
+import nltk
+import pke
+import spacy
+from flashtext import KeywordProcessor
+from nltk.corpus import stopwords
+
+# Set custom NLTK data path
+nltk.data.path.append('D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
+
+# Ensure required nltk resources are available
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
-    print("Stopwords not found. Downloading...")
-    nltk.download('stopwords')
+    nltk.download('stopwords', download_dir='D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
 
 # Check if spaCy model is downloaded
 try:
-    nlp = spacy.load('en_core_web_sm')
+    nlp = spacy.load("en_core_web_sm")
 except OSError:
     print("spaCy model 'en_core_web_sm' not found. Downloading...")
     # Download spaCy model if not found
     os.system("python -m spacy download en_core_web_sm")
-    nlp = spacy.load('en_core_web_sm')
+    nlp = spacy.load("en_core_web_sm")
+
 
 def get_nouns_multipartite(content):
     """
@@ -30,21 +34,21 @@ def get_nouns_multipartite(content):
     out = []
     try:
         extractor = pke.unsupervised.MultipartiteRank()
-        extractor.load_document(input=content, language='en', spacy_model=nlp)
+        extractor.load_document(input=content, language="en", spacy_model=nlp)
 
         # Define parts of speech to include in candidates
-        pos = {'PROPN', 'NOUN'}
+        pos = {"PROPN", "NOUN"}
 
         # Build stoplist
         stoplist = list(string.punctuation)
-        stoplist += ['-lrb-', '-rrb-', '-lcb-', '-rcb-', '-lsb-', '-rsb-']
-        stoplist += stopwords.words('english')
+        stoplist += ["-lrb-", "-rrb-", "-lcb-", "-rcb-", "-lsb-", "-rsb-"]
+        stoplist += stopwords.words("english")
 
         # Candidate selection (the stoplist is not passed, could be added)
         extractor.candidate_selection(pos=pos)
 
         # Weighting candidates using random walk (MultipartiteRank)
-        extractor.candidate_weighting(alpha=1.1, threshold=0.75, method='average')
+        extractor.candidate_weighting(alpha=1.1, threshold=0.75, method="average")
 
         # Extract top 15 keyphrases
         keyphrases = extractor.get_n_best(n=15)
@@ -58,7 +62,7 @@ def get_nouns_multipartite(content):
     return out
 
 
-def get_keywords(originaltext, summarytext,num_keywords=4):
+def get_keywords(originaltext, summarytext, num_keywords=4):
     """
     Extract keywords from original text and match them with the summary text.
     """
@@ -81,3 +85,17 @@ def get_keywords(originaltext, summarytext,num_keywords=4):
 
     # Return the top 4 important keywords
     return important_keywords[:num_keywords]
+
+if __name__ == "__main__":
+    # Sample text
+    original_text = """There were two brothers; the older one was always mean to the younger one. 
+    The older one would chop firewood in the forest and sell it in the market. One day, 
+    he stumbled across a magical tree. The tree begged him not to cut him down and promised him golden apples in exchange. 
+    The older brother felt disappointed with the number of apples he received. He decided to cut down the tree anyway,
+    but the tree showered him with hundreds of needles"""
+    summary_text = "Two brothers, older mean to younger. Older chops firewood, finds magical tree with golden apples. Disappointed, cuts tree, gets needles."
+
+    # Extract keywords from the original text and summary
+    keywords = get_keywords(original_text, summary_text, num_keywords=5)
+    print("Keywords:", keywords)
+    print(type(keywords))

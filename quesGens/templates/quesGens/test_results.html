@@ -1,0 +1,10 @@
+{% extends 'quesGens/base.html' %}
+{% block content %}
+<main>
+    <div class="container">
+        <h2>Test Results</h2>
+        <p>Your score: {{ score }} out of {{ total }}</p>
+        <a href="{% url 'test' %}">Try Again</a>
+    </div>
+</main>
+{% endblock %}
