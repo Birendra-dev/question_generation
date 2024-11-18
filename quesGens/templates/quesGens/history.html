@@ -3,11 +3,12 @@
 {% block content %}
 
 <main>
-    {% for entry in history_data %}
+{% if history_data %}
+    {% for entry in history_data %} <!-- entry is one list of mcqs --> <!-- entry is one object -->
     <div class="container-next">
         <br>
         <div class="mcq">
-            {% for mcq in entry.mcqs %}
+            {% for mcq in entry.mcqs %} <!-- mcq is one dictionary -->
             <p><strong>Question:</strong> {{ mcq.question }}</p>
             <ul>
                 {% for option in mcq.options %}
@@ -19,15 +20,21 @@
             {% endfor %}
         </div>
         <div class="container-mini">
-        <h3 style="font-size:15px; color: #000;">created on {{ entry.created_at|date:"Y-m-d H:i" }}</h3>
-        <br>
-        <form method="POST" action="{% url 'delete_history' entry.id %}">
-            <!-- each entry in history its associated id,so here when the form submit the url with current entry id gets triggered and run the delete
-             history view function to delete the particular entry -->
-            {% csrf_token %}
-            <button type="submit" class="delete-btn">Delete</button>
-        </form>
-    </div>
+            <h3 style="font-size:15px; color: #000;">created on {{ entry.created_at|date:"Y-m-d H:i" }}</h3>
+            <br>
+            {% if request.user.is_authenticated %}
+            <form method="POST" action="{% url 'delete_history' entry.id %}"><!-- each entry in history its associated id,so here when the form submit the url with current entry id gets triggered and run the delete history view function to delete the particular entry -->
+                 {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+            {% else %}
+            <form method="POST" action="{% url 'delete_history' 1 %}">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+
+            {% endif %}
+        </div>
     </div>
     <!-- Modal -->
     <div id="loginModal" class="modal">
@@ -70,10 +77,13 @@
                     <button type="submit" class="submit-btn1">Register</button>
                 </form>
             </div>
-            </div>
         </div>
     </div>
-    {% endfor %}
+ </div>
+ {% endfor %}
+{% else %}
+<h2>No History found!</h2>
+{% endif %}
 </main>
 
 <script>
