@@ -164,6 +164,9 @@
           and reinforcement learning, where an agent learns by interacting with an environment and receiving feedback. Machine learning has a wide range of applications, 
           from natural language processing and image recognition to predictive analytics and autonomous vehicles, revolutionizing industries by automating tasks and providing insights that were once difficult or impossible to uncover manually.`;
         document.getElementById("context").value = sampletext;
+        var buttonsContainer = document.querySelector('.buttons-container');
+        buttonsContainer.classList.add('hidden');
+        button.style.display = 'none';
     }
 
     window.onclick = function (event) {
