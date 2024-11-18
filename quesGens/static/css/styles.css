@@ -25,8 +25,8 @@ body {
     min-height: 100vh;
     min-height: 100dvh;
     /* background-color: var(--base-clr); */
-    background-color: #f5f6fa;
-
+    /* background-color: #f5f6fa; */
+    background-color:#f7f8f9;
     /* background-color:#E9E9E9; */
     color: var(--text-clr);
     display: grid;

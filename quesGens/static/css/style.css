@@ -1,8 +1,9 @@
 form {
     background-color: #fff;
-    padding: 15px;
+    /* padding: 15px; */
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .form-group {
@@ -26,7 +27,10 @@ textarea:focus {
     /* border:2px solid  #007bff; */
     outline: none;
 }
-
+textarea::placeholder{
+    font-size:18px;
+    font-family:"Open Sans", sans-serif;
+}
 input[type="number"] {
     width: 98%;
     padding: 10px;
@@ -97,14 +101,19 @@ button {
     font-size:17px; 
     font-weight: bold; 
     background-color:white;
-    color:green;
+    /* color:green; */
     border-radius: 20px; 
-    border: 1px solid green;
+    /* border: 1px solid green; */
+    color:#008847;
+    border:1px solid #008847;
 }
 .context-btn:hover{
     background-color:#4CAF50;
     color:#fff;
     border:#fff;
+}
+.hidden{
+    display:none;
 }
 /* =================================================================[LOGIN-REGISTRATION-FORM]================================================================================== */
 /* Modal Styles */
