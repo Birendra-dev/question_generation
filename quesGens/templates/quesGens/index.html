@@ -14,20 +14,42 @@
                             style="width: 50px; height: 50px; margin-left:50px;" class="rounded-circle account-img"
                             src="{{ user.profile.image.url }}"></a>
                 </div>
+                {% if request.user.is_authenticated %}
                 <div id="dropdownMenu" class="dropdown-menu extra">
-                    <a href="#" class="dropdown-item" onclick="downloadFile('txt')"><i
-                            class="fa-solid fa-right-to-bracket"></i> Login/Signup</a>
+                    <a href="#" class="dropdown-item" onclick="downloadPDF()"><i class="fa-regular fa-user"></i>
+                        <div class="account">
+                            <h3 style="font-size:12px;">Account details</h3>
+                            <span>{{ user.email }}</span>
+                        </div>
+                    </a>
                     <hr>
                     <a href="#" class="dropdown-item" onclick="downloadPDF()"><i class="fa-solid fa-globe"></i>
                         English</a>
-                    <a href="#" class="dropdown-item" onclick="downloadFile('word')"><i
-                            class="fa-solid fa-toggle-on"></i> Dark mode</a>
-                    <a href="#" class="dropdown-item" onclick="downloadFile('word')"><i class="fas fa-file-word"></i>
-                        Help Center</a>
-                    <a href="#" class="dropdown-item" onclick="downloadFile('word')"><i
-                            class="fa-solid fa-address-card"></i> Contact us</a>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i> Help Center</a>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
+                    <!-- <a href="#" class="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i> Log out</a> -->
+                     <hr>
+                    <form style="border:0px;" action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button style="color:#333; font-size:15px; background-color:transparent;" type="submit" class="logout-btn"><i style="margin-right:12px" class="fa-solid fa-right-from-bracket"></i>Log out</button>
+                    </form>
 
                 </div>
+                {% else %}
+                <div id="dropdownMenu" class="dropdown-menu extra">
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-right-to-bracket"></i> Login/Signup</a>
+                    <hr>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-globe"></i>English</a>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
+                    <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i>Help Center</a>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
+                </div>
+
+                {% endif %}
+
+
+
             </div>
             {% else %}
             <button id="loginBtn" class="login-btn">Login</button>
@@ -177,14 +199,14 @@
             }
         }
     }
-    document.getElementById('context').addEventListener('input', function() {
-            var buttonsContainer = document.querySelector('.buttons-container');
-            if (this.value.length > 0) {
-                buttonsContainer.classList.add('hidden');
-            } else {
-                buttonsContainer.classList.remove('hidden');
-            }
-        });
+    document.getElementById('context').addEventListener('input', function () {
+        var buttonsContainer = document.querySelector('.buttons-container');
+        if (this.value.length > 0) {
+            buttonsContainer.classList.add('hidden');
+        } else {
+            buttonsContainer.classList.remove('hidden');
+        }
+    });
     window.onload = function () {
         document.getElementById('context').focus();
     };

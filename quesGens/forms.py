@@ -71,3 +71,20 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+    # user_dropdown = forms.ModelChoiceField(
+    # queryset=User.objects.all(),
+    # empty_label="Select a user",
+    # widget=forms.Select(attrs={'class': 'form-control'})  # Add custom classes if needed
+    # )
+
+    # email = forms.EmailField()
+
+    # class Meta:
+    #     model = User
+    #     fields = ['username', 'email']
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+        
+    #     # Customize the choices for the dropdown (user_dropdown)
+    #     self.fields['user_dropdown'].label_from_instance = lambda user: f"{user.username} ({user.email})"

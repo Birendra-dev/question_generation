@@ -20,7 +20,7 @@ import random
 from apps.rakeKeyword import get_keywords_rake
 from apps.t5distractors import get_distractors_t5, dis_model, dis_tokenizer
 from apps.distilBERTKeyword import extract_keywords
-from .forms import InputForm,UserUpdateForm,ProfileUpdateForm
+from .forms import InputForm,UserUpdateForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -102,7 +102,11 @@ def generate_mcq(request):
             return render(request, "quesGens/result.html", result_data,)
     else:
         form = InputForm()
-    return render(request, "quesGens/index.html", {"form": form})
+
+    if request.user.is_authenticated:
+     return render(request, "quesGens/index.html", {"form": form,'user':request.user})
+    else:
+     return render(request,"quesGens/index.html",{'form':form})
 
 def result(request):
  if request.user.is_authenticated:
@@ -189,26 +193,26 @@ def download_pdf(request):
     return FileResponse(buffer, as_attachment=True, filename="mcqs.pdf")
 
    
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                    request.FILES,
-                                    instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            messages.success(request, f'Your account has been updated! You are able to login')
-            return redirect('profile')
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-        context ={
-        'u_form':u_form,
-        'p_form':p_form
-         }
-    return render(request,'quesGens/profile.html',context)
+# @login_required
+# def profile(request):
+#     if request.method == 'POST':
+#         u_form = UserUpdateForm(request.POST, instance=request.user)
+#         p_form = ProfileUpdateForm(request.POST,
+#                                     request.FILES,
+#                                     instance=request.user.profile)
+#         if u_form.is_valid() and p_form.is_valid():
+#             u_form.save()
+#             p_form.save()
+#             messages.success(request, f'Your account has been updated! You are able to login')
+#             return redirect('profile')
+#     else:
+#         u_form = UserUpdateForm(instance=request.user)
+#         p_form = ProfileUpdateForm(instance=request.user.profile)
+#         context ={
+#         'u_form':u_form,
+#         'p_form':p_form
+#          }
+#     return render(request,'quesGens/profile.html',context)
 
 def test(request):
     latest_batch = MCQ.objects.latest('created_at')
@@ -263,3 +267,9 @@ def delete_history(request, entry_id):
     else:
         del request.session['mcqs']  #delete the entries of random non-logged user from the session.
     return redirect('history')
+# def user_profile(request):
+#     # Get the logged-in user's username and email
+#     # username = request.user.username
+#     email = request.user.email
+
+#     return render(request, 'quesGens/index.html', {'email': email})
