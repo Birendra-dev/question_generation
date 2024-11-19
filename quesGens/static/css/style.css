@@ -414,3 +414,15 @@ input[type="radio"]:not(:checked) {
 .file-input-label:hover {
     background-color: #45a049;
 }
+.contacts ul{
+    list-style-type:none;
+    display:flex;
+    gap:8px;
+}
+.contacts{
+margin-top:500px;
+margin-left:460px;
+}
+.contacts p{
+    margin-left:13px;
+}

@@ -267,9 +267,5 @@ def delete_history(request, entry_id):
     else:
         del request.session['mcqs']  #delete the entries of random non-logged user from the session.
     return redirect('history')
-# def user_profile(request):
-#     # Get the logged-in user's username and email
-#     # username = request.user.username
-#     email = request.user.email
-
-#     return render(request, 'quesGens/index.html', {'email': email})
+def about(request):
+    return render(request,'quesGens/about.html')

@@ -24,11 +24,10 @@
                     </a>
                     <hr>
                     <a href="#" class="dropdown-item" onclick="downloadPDF()"><i class="fa-solid fa-globe"></i>
-                        English</a>
+                        Notifications</a>
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
                     <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i> Help Center</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
-                    <!-- <a href="#" class="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i> Log out</a> -->
+                    <a href="{% url 'about' %}" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
                      <hr>
                     <form style="border:0px;" action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
@@ -40,7 +39,7 @@
                 <div id="dropdownMenu" class="dropdown-menu extra">
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-right-to-bracket"></i> Login/Signup</a>
                     <hr>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-globe"></i>English</a>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-globe"></i>Notifications</a>
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
                     <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i>Help Center</a>
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
