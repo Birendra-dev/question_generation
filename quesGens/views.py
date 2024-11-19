@@ -217,9 +217,7 @@ def download_pdf(request):
 def test(request):
     latest_batch = MCQ.objects.latest('created_at')
     mcq_list = json.loads(latest_batch.mcqs)
-    print("Parsed mcq_list:", mcq_list)  # Debugging: print the parsed data
     mcq_list=ast.literal_eval(mcq_list)  #converts json string to list
-    print(type(mcq_list))
     if request.method == 'POST':
         score = 0
         for i, mcq in enumerate(mcq_list):
