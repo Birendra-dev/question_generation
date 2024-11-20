@@ -48,3 +48,7 @@ def summarizer(text, model, tokenizer):
     summary = postprocesstext(summary)
 
     return summary.strip()
+
+if __name__ == "__main__":
+    text = """The human heart is an organ that pumps blood through the body via the circulatory system. It is a muscular organ about the size of a fist, located just behind and slightly left of the breastbone. The heart is divided into four chambers: the upper two are called the atria, and the lower two are called the ventricles. The heart is made up of muscle tissue, which contracts and relaxes to pump blood. The heart is a vital organ that supplies the body with oxygen and nutrients. It is essential for life."""
+    print(summarizer(text, summary_model, summary_tokenizer))
