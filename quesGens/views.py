@@ -40,6 +40,7 @@ def generate_mcq(request):
             # Step 1: Extract keywords based on the selected option
             if option_2 == 'spacy':
                 summary_text = summarizer(context, summary_model, summary_tokenizer)
+                print(summary_text)
                 keywords = get_keywords(context, summary_text, num_keywords)
             elif option_2 == 'rake':
                 keywords = get_keywords_rake(context, num_keywords)

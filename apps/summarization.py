@@ -29,7 +29,6 @@ def summarizer(text, model, tokenizer):
         truncation=True,
         return_tensors="pt",
     )
-
     input_ids, attention_mask = encoding["input_ids"], encoding["attention_mask"]
 
     outs = model.generate(
