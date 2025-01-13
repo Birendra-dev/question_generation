@@ -51,7 +51,7 @@
 
             </div>
             {% else %}
-            <button id="loginBtn" class="login-btn"><i style="margin-right:12px" class="fa-regular fa-user"></i>Login</button>
+            <button id="loginBtn" class="login-btn">Login  <i class="fa-regular fa-user"></i></button>
             {% endif %}
         </div>
 
@@ -65,11 +65,6 @@
                 <textarea id="context" name="context" rows="4"
                     style="width:100%; color:#172b4d; padding: 10px;line-height:28px; font-size:16px; border:none;"
                     placeholder='To write text, enter or paste it here and press "generate".'></textarea>
-                <!-- <div class="buttons-container" style="position: absolute; top: 70px; right: 10px;">
-                    <button class="context-btn" onclick="filltext()" type="button"><i
-                            class="fa-regular fa-file-lines"></i> Try Sample Text</button>
-                    <button class="context-btn" type="button"> <i class="fa-regular fa-paste"></i> Paste Text</button>
-                </div> -->
                 <div class="buttons-container" style="position: absolute; top: 90px; right: 600px;">
                     <button class="context-btn" onclick="filltext()" type="button"><i
                             class="fa-regular fa-file-lines"></i> Try Sample Text</button>
@@ -180,11 +175,7 @@
     }
 
     function filltext() {
-        var sampletext = `Machine learning is a branch of artificial intelligence (AI) that enables systems to learn from data and make predictions or decisions without being explicitly programmed.
-         It involves the development of algorithms that can identify patterns and correlations in large datasets, enabling systems to improve their performance over time.
-          There are various types of machine learning, including supervised learning, where the model is trained on labeled data; unsupervised learning, where the model finds patterns in data without labeled examples; 
-          and reinforcement learning, where an agent learns by interacting with an environment and receiving feedback. Machine learning has a wide range of applications, 
-          from natural language processing and image recognition to predictive analytics and autonomous vehicles, revolutionizing industries by automating tasks and providing insights that were once difficult or impossible to uncover manually.`;
+        var sampletext = `Chemicals are substances composed of matter, and they play a vital role in our daily lives.They can be natural, such as water, oxygen, and minerals, or synthetic, like plastics, pharmaceuticals, and cleaning agents.At the molecular level, chemicals are formed through the combination of atoms in various configurations, giving them distinct properties and functions.Chemical reactions, which occur when substances interact, are fundamental to processes in biology, industry, and the environment.For instance, the chemical reaction of combustion powers vehicles, while biochemical reactions in the body enable vital processes like digestion and respiration`;
         document.getElementById("context").value = sampletext;
         var buttonsContainer = document.querySelector('.buttons-container');
         buttonsContainer.classList.add('hidden');
