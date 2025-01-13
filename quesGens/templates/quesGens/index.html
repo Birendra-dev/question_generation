@@ -51,7 +51,7 @@
 
             </div>
             {% else %}
-            <button id="loginBtn" class="login-btn">Login</button>
+            <button id="loginBtn" class="login-btn">Login  <i class="fa-regular fa-user"></i></button>
             {% endif %}
         </div>
 
@@ -174,11 +174,7 @@
     }
 
     function filltext() {
-        var sampletext = `Machine learning is a branch of artificial intelligence (AI) that enables systems to learn from data and make predictions or decisions without being explicitly programmed.
-         It involves the development of algorithms that can identify patterns and correlations in large datasets, enabling systems to improve their performance over time.
-          There are various types of machine learning, including supervised learning, where the model is trained on labeled data; unsupervised learning, where the model finds patterns in data without labeled examples; 
-          and reinforcement learning, where an agent learns by interacting with an environment and receiving feedback. Machine learning has a wide range of applications, 
-          from natural language processing and image recognition to predictive analytics and autonomous vehicles, revolutionizing industries by automating tasks and providing insights that were once difficult or impossible to uncover manually.`;
+        var sampletext = `Chemicals are substances composed of matter, and they play a vital role in our daily lives.They can be natural, such as water, oxygen, and minerals, or synthetic, like plastics, pharmaceuticals, and cleaning agents.At the molecular level, chemicals are formed through the combination of atoms in various configurations, giving them distinct properties and functions.Chemical reactions, which occur when substances interact, are fundamental to processes in biology, industry, and the environment.For instance, the chemical reaction of combustion powers vehicles, while biochemical reactions in the body enable vital processes like digestion and respiration`;
         document.getElementById("context").value = sampletext;
         var buttonsContainer = document.querySelector('.buttons-container');
         buttonsContainer.classList.add('hidden');

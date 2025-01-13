@@ -3,8 +3,16 @@
 <main>
     <div class="container">
         <h2>Test Results</h2>
-        <p>Your score: {{ score }} out of {{ total }}</p>
-        <a href="{% url 'test' %}">Try Again</a>
+        <div class="card">
+         <p>Your score: {{ score }} out of {{ total }}</p>
+         {% if score >= 3 %}
+           <h2>Excellent  <i class="fa-solid fa-thumbs-up"></i></h2>
+         {% else %}
+            <h2>Poor  <i class="fa-solid fa-thumbs-down"></i></h2>
+         {% endif %}
+        <a href="{% url 'test' %}">Try Again <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        
     </div>
 </main>
 {% endblock %}
