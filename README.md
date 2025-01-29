@@ -1,9 +1,10 @@
-```markdown
 # Project Setup Guide
 
-## To Run This Project
+## 🚀 Getting Started  
 
-1. Create virtual environment using UV (recommended) or other package manager:
+
+### 1️⃣ Create a Virtual Environment (Recommended: UV)  
+
 ```bash
 uv venv --seed --python 3.9
 ```
