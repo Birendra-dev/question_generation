@@ -5,11 +5,14 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
+    "crispy-bootstrap5>=2024.10",
+    "django-crispy-forms>=2.3",
     "django>=4.2.16",
     "flashtext==2.7",
     "huggingface-hub>=0.26.1",
     "langchain-ollama>=0.2.0",
     "peft>=0.13.2",
+    "pip>=24.3.1",
     "pke",
     "protobuf>=5.28.3",
     "rake-nltk>=1.0.6",

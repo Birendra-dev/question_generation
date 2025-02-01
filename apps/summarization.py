@@ -5,9 +5,10 @@ from transformers import BartForConditionalGeneration, BartTokenizer
 nltk.data.path.append('D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
 try:
     nltk.data.find('tokenizers/punkt')
+    nltk.data.find('tokenizers/punkt_tab')
 except LookupError:
     nltk.download('punkt', download_dir='D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
-
+    nltk.download('punkt_tab', download_dir='D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
 model_dir = "apps/bart-large-cnn"
 summary_model = BartForConditionalGeneration.from_pretrained(model_dir)
 summary_tokenizer = BartTokenizer.from_pretrained(model_dir)
@@ -29,7 +30,6 @@ def summarizer(text, model, tokenizer):
         truncation=True,
         return_tensors="pt",
     )
-
     input_ids, attention_mask = encoding["input_ids"], encoding["attention_mask"]
 
     outs = model.generate(
