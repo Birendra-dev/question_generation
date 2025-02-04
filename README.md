@@ -1,7 +1,9 @@
 # Project Setup Guide
 
 ## 🚀 Getting Started  
+## 🚀 Getting Started  
 
+### 1️⃣ Create a Virtual Environment (Recommended: UV)  
 ### 1️⃣ Create a Virtual Environment (Recommended: UV)  
 ```bash
 uv venv --seed --python 3.9
