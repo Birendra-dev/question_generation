@@ -7,15 +7,11 @@ wheels/
 *.egg-info
 migrations/
 hello.py
-<<<<<<< HEAD
 test.py
 
-=======
 guide
->>>>>>> 789512f4dce158ddf7189f3309af66d633585c19
 # Virtual environments
 .venv
-apps
 # Database
 *.sqlite3
 
@@ -29,6 +25,7 @@ s2v_reddit_2019_lg/
 en_core_web_sm/
 race_distractors/
 base-distilbert/
+sense2vec-2.0.2/
 
 
 # Jupiter notebook
