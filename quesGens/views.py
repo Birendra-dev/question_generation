@@ -1,129 +1,211 @@
-import random
-from datetime import datetime
-from django.shortcuts import render
-from django.http import FileResponse,JsonResponse
-from io import BytesIO
-import json
 import ast
-from django.urls import reverse
-from django.shortcuts import render,redirect,get_object_or_404
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth import login,authenticate,logout
+import json
 import random
-from .forms import InputForm,UserUpdateForm
-from django.views.decorators.csrf import csrf_exempt
+from io import BytesIO
+
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+from django.http import FileResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import csrf_exempt
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+
+from apps.modules.duplicate_removal import (
+    remove_distractors_duplicate_with_correct_answer,
+    remove_duplicates,
+)
+from apps.modules.keyword_chunking import keyword_centric_chunking
+from apps.modules.text_clean import clean_text
+
+from .forms import InputForm
 from .models import MCQ
-import uuid
+
+
 def generate_mcq(request):
     if request.method == "POST":
         form = InputForm(request.POST)
         if form.is_valid():
-            context = form.cleaned_data["context"]
+            context = clean_text(form.cleaned_data["context"])
             num_keywords = int(form.cleaned_data["num_keywords"])
-            option_1 = form.cleaned_data["option_1"]  # Question generation choice
-            option_2 = form.cleaned_data["option_2"]  # Keyword extraction choice
-            option_3 = form.cleaned_data["option_3"]  # Distractor generation choice
+            option_1 = form.cleaned_data["option_1"]
+            option_2 = form.cleaned_data["option_2"]
+            option_3 = form.cleaned_data["option_3"]
             
-            # Step 1: Extract keywords based on the selected option
-            if option_2 == 'spacy':
-                from apps.summarization import summarizer, summary_model, summary_tokenizer
-                from apps.keywordExtraction import get_keywords
-                summary_text = summarizer(context, summary_model, summary_tokenizer)
-                print(summary_text)
-                keywords = get_keywords(context, summary_text, num_keywords)
-
-            elif option_2 == 'rake':
-                from apps.rakeKeyword import get_keywords_rake
-                keywords = get_keywords_rake(context, num_keywords)
-
-            elif option_2 == 'distilBERT':
-                from apps.distilBERTKeyword import extract_keywords
-                keywords = extract_keywords(context, num_keywords=num_keywords)
+            print(f"Raw POST Data: {request.POST}")  # Debugging purpose
+            
+            # Step 1: Quick Character-Length Check (~2500 chars ≈ 500 tokens)
+            if len(context) > 2500:
+                from apps.questionGeneration import question_tokenizer
+                tokenized_length = len(question_tokenizer.tokenize(context))
             else:
-                keywords = []  # Fallback if no valid option selected
+                tokenized_length = 0  # Skip full tokenization if unlikely to exceed limit
 
-            distractors_dict = {}
-            questions_dict = {}  # Store questions for each keyword
+            # Step 2: If Tokens > 500, Apply Keyword-Centric Chunking
+            if tokenized_length > 500:
+                chunks = keyword_centric_chunking(context, question_tokenizer)
+            else:
+                chunks = [context]
 
-            # Step 2: Generate questions and distractors
-            from apps.questionGeneration import get_question, question_model, question_tokenizer
-            for keyword in keywords:
-                question = get_question(context, keyword, question_model, question_tokenizer)
+            # Step 3: Process Each Chunk Separately
+            all_keywords = []
+            questions_dict, distractors_dict = {}, {}
 
-                # Generate distractors based on the selected option
-                if option_3 == 's2v':
-                    from apps.s2vdistractors import get_distractors, s2v
-                    distractors = get_distractors(keyword, s2v)
+            for chunk in chunks:
+                keywords = extract_keywords_based_on_option(option_2, chunk, num_keywords)
+                keywords = remove_duplicates(keywords)
+                all_keywords.extend(keywords)
 
-                elif option_3 == 't5-llm':
-                    from apps.t5distractors import get_distractors_t5, dis_model, dis_tokenizer
-                    distractors = get_distractors_t5(
-                        question=question,
-                        answer=keyword,
-                        context=context,
-                        model=dis_model,
-                        tokenizer=dis_tokenizer
-                    )
-                else:
-                    distractors = []  # Fallback if no valid option selected
+                q_dict, d_dict = generate_questions_and_distractors(option_1, option_3, chunk, keywords)
+                questions_dict.update(q_dict)
+                distractors_dict.update(d_dict)
 
-                # Store the question and distractors for the keyword
-                questions_dict[keyword] = question
-                distractors_dict[keyword] = distractors
-            mcq_list = []
-            for keyword in keywords:
-                question = questions_dict[keyword]
-                correct_answer = keyword
-                distractors = distractors_dict[keyword]
-                # Combine correct answer with distractors and shuffle them
-                options = [correct_answer] + distractors
-                while len(options) < 4:
-                  options.append("Placeholder") 
-                random.shuffle(options)
-                mcq_list.append(
-                    {
-                        "question": question,
-                        "options": options,
-                        "correct_answer": correct_answer,  # For verification purposes if needed
-                    }
-                )
-            result_data = {
-                "context": context,
-                "mcq_list": mcq_list,  # List of questions with options
-            }
+            # Step 4: Apply Duplicate Removal for Distractors
+            for keyword in all_keywords:
+                distractors_dict[keyword] = remove_distractors_duplicate_with_correct_answer(keyword, distractors_dict[keyword])
 
-            if request.user.is_authenticated:  #for authorized user store the result to the database
-                MCQ.objects.create(user=request.user, mcqs=json.dumps(mcq_list))  #serialize dictionary,lists and store in json format in db
-            else:  #for unauthenticated user store result in session temporarily
+            # Step 5: Prepare MCQs
+            mcq_list = create_mcq_list(all_keywords, questions_dict, distractors_dict)
+
+            if request.user.is_authenticated:
+                MCQ.objects.create(user=request.user, mcqs=json.dumps(mcq_list))  # Store in DB
+            else:
                 request.session.pop('mcqs', None)
-                request.session['mcqs'] = json.dumps(mcq_list)  
-            return render(request, "quesGens/result.html", result_data,)
-    else:
-        form = InputForm()
+                request.session['mcqs'] = json.dumps(mcq_list)  # Store in session
 
-    if request.user.is_authenticated:
-     return render(request, "quesGens/index.html", {"form": form,'user':request.user})
-    else:
-     return render(request,"quesGens/index.html",{'form':form})
+            return render(request, "quesGens/result.html", {"context": context, "mcq_list": mcq_list})
+
+    return render(request, "quesGens/index.html", {"form": InputForm(), 'user': request.user if request.user.is_authenticated else None})
 
 def result(request):
- if request.user.is_authenticated:
-    latest_batch = MCQ.objects.latest('created_at') #quering latest generated mcqs from database.
-    mcq_list = json.loads(latest_batch.mcqs)
-    mcq_list=ast.literal_eval(mcq_list)  #converting to python list
- else:
-    mcq_list=request.session.get('mcqs',None)
-    if mcq_list is not None:
-        mcq_list=json.loads(mcq_list)
+    if request.user.is_authenticated:
+        latest_batch = MCQ.objects.latest('created_at')  # Fetch latest MCQs from DB
+        mcq_list = json.loads(latest_batch.mcqs)
+        mcq_list = ast.literal_eval(mcq_list)  # Convert to Python list
     else:
-        mcq_list=[]
- result_data={
-        "mcq_list":mcq_list
-    }
- return render(request,'quesGens/result.html',result_data)
+        mcq_list = request.session.get('mcqs', None)
+        if mcq_list is not None:
+            mcq_list = json.loads(mcq_list)
+        else:
+            mcq_list = []
+    
+    return render(request, 'quesGens/result.html', {"mcq_list": mcq_list})
+
+
+def download_pdf(request):
+    mcq_list = request.session.get('mcq_list')
+    
+    # Check if mcq_list is available
+    if not mcq_list:
+        return render(request, "quesGens/error.html", 
+                      {"error": "No MCQs found to download as PDF."})
+
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+
+    y_position = height - 50
+    for mcq in mcq_list:
+        p.drawString(100, y_position, f"Question: {mcq['question']}")
+        y_position -= 20
+        for option in mcq['options']:
+            p.drawString(120, y_position, f"- {option}")
+            y_position -= 15
+        y_position -= 30
+
+    p.showPage()
+    p.save()
+    buffer.seek(0)
+
+    return FileResponse(buffer, as_attachment=True, filename="mcqs.pdf")
+
+
+# Utility Functions
+def extract_keywords_based_on_option(option, context, num_keywords):
+    """Extract keywords based on the selected option."""
+    if option == 'spacy':
+        from apps.keywordExtraction import get_keywords
+        from apps.summarization import summarizer, summary_model, summary_tokenizer
+        
+        summary_text = summarizer(context, summary_model, summary_tokenizer)
+        return get_keywords(context, summary_text, num_keywords)
+    
+    elif option == 'rake':
+        from apps.rakeKeyword import get_keywords_rake
+        return get_keywords_rake(context, num_keywords)
+    
+    elif option == 'distilBERT':
+        from apps.distilBERTKeyword import extract_keywords
+        return extract_keywords(context, num_keywords=num_keywords)
+    
+    return []
+
+
+def generate_questions_and_distractors(option_1, option_3, context, keywords):
+    """Generate questions and distractors for given keywords."""
+    questions_dict = {}
+    distractors_dict = {}
+
+    # Lazy load models for question generation and distractor generation
+    if option_1 == "t5-llm":
+        from apps.questionGeneration import get_question, question_model, question_tokenizer
+    if option_3 == "t5-llm":
+        from apps.t5distractors import dis_model, dis_tokenizer, get_distractors_t5
+    if option_3 == "llama":
+        from apps.llama_distractors import generate_distractors_llama
+    if option_3 == "s2v":
+        from apps.s2vdistractors import generate_distractors, s2v
+
+    for keyword in keywords:
+        # Generate question
+        if option_1 == "t5-llm":
+            question = get_question(context, keyword, question_model, question_tokenizer)
+        else:
+            question = f"What is {keyword}?"  # Fallback question
+            print(f"Option 1: {option_1}, Using T5 Model: {option_1 == 't5-llm'}")
+
+        # Generate distractors
+        if option_3 == "t5-llm":
+            distractors = get_distractors_t5(
+                question=question,
+                answer=keyword,
+                context=context,
+                model=dis_model,
+                tokenizer=dis_tokenizer
+            )
+        elif option_3 == "llama":
+            distractors = generate_distractors_llama(context, question, keyword)
+        elif option_3 == "s2v":
+            distractors = generate_distractors(keyword, s2v)
+        else:
+            distractors = []
+
+        questions_dict[keyword] = question
+        distractors_dict[keyword] = distractors
+
+    return questions_dict, distractors_dict
+
+
+def create_mcq_list(keywords, questions_dict, distractors_dict):
+    """Combine questions and distractors into MCQ format."""
+    mcq_list = []
+    for keyword in keywords:
+        question = questions_dict[keyword]
+        correct_answer = keyword
+        distractors = distractors_dict[keyword]
+
+        # Combine correct answer with distractors and shuffle them
+        options = [correct_answer] + distractors
+        random.shuffle(options)
+
+        mcq_list.append(
+            {
+                "question": question,
+                "options": options,
+                "correct_answer": correct_answer,
+            }
+        )
+    return mcq_list
 
 @csrf_exempt
 def register_view(request):
@@ -232,23 +314,23 @@ def about(request):
     return render(request,'quesGens/about.html')
 
 
-                                                                                                                                                        # @login_required
-                                                                                                                                                        # def profile(request):
-                                                                                                                                                        #     if request.method == 'POST':
-                                                                                                                                                        #         u_form = UserUpdateForm(request.POST, instance=request.user)
-                                                                                                                                                        #         p_form = ProfileUpdateForm(request.POST,
-                                                                                                                                                        #                                     request.FILES,
-                                                                                                                                                        #                                     instance=request.user.profile)
-                                                                                                                                                        #         if u_form.is_valid() and p_form.is_valid():
-                                                                                                                                                        #             u_form.save()
-                                                                                                                                                        #             p_form.save()
-                                                                                                                                                        #             messages.success(request, f'Your account has been updated! You are able to login')
-                                                                                                                                                        #             return redirect('profile')
-                                                                                                                                                        #     else:
-                                                                                                                                                        #         u_form = UserUpdateForm(instance=request.user)
-                                                                                                                                                        #         p_form = ProfileUpdateForm(instance=request.user.profile)
-                                                                                                                                                        #         context ={
-                                                                                                                                                        #         'u_form':u_form,
-                                                                                                                                                        #         'p_form':p_form
-                                                                                                                                                        #          }
-                                                                                                                                                        #     return render(request,'quesGens/profile.html',context)
+# @login_required
+# def profile(request):
+#     if request.method == 'POST':
+#         u_form = UserUpdateForm(request.POST, instance=request.user)
+#         p_form = ProfileUpdateForm(request.POST,
+#                                     request.FILES,
+#                                     instance=request.user.profile)
+#         if u_form.is_valid() and p_form.is_valid():
+#             u_form.save()
+#             p_form.save()
+#             messages.success(request, f'Your account has been updated! You are able to login')
+#             return redirect('profile')
+#     else:
+#         u_form = UserUpdateForm(instance=request.user)
+#         p_form = ProfileUpdateForm(instance=request.user.profile)
+#         context ={
+#         'u_form':u_form,
+#         'p_form':p_form
+#          }
+#     return render(request,'quesGens/profile.html',context)

@@ -1,10 +1,6 @@
 import nltk
-<<<<<<< HEAD
 from rake_nltk import Rake
 
-=======
-# nltk.download('averaged_perceptron_tagger_eng')
->>>>>>> 789512f4dce158ddf7189f3309af66d633585c19
 # Set custom NLTK data path
 nltk.data.path.append('D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
 
@@ -61,18 +57,18 @@ def get_keywords_rake(content, num_keywords=4):
 
 
 # Sample text
-texts = """There were two brothers; the older one was always mean to the younger one. 
-The older one would chop firewood in the forest and sell it in the market. One day, 
-he stumbled across a magical tree. The tree begged him not to cut him down and promised him golden apples in exchange. 
-The older brother felt disappointed with the number of apples he received. He decided to cut down the tree anyway,
-but the tree showered him with hundreds of needles. The boy was left lying on the forest ground in pain. 
-His younger brother finally found him and carefully took out every needle. 
-The older brother finally apologised for treating his brother badly. The magical tree saw this exchange. 
-It decided to give them more golden apples."""
-
+texts = """The Solar System consists of the Sun and the celestial bodies that orbit it, 
+    including eight planets, their moons, and various dwarf planets, asteroids, and comets. 
+    The four inner planets—Mercury, Venus, Earth, and Mars—are rocky, whereas the outer planets—Jupiter, 
+    Saturn, Uranus, and Neptune—are gas giants. The asteroid belt, located between Mars and Jupiter, 
+    contains numerous rocky objects. Beyond Neptune lies the Kuiper Belt, home to icy bodies such as Pluto. 
+    The Sun, a massive ball of plasma, provides the energy that sustains life on Earth. Gravity keeps the planets in orbit, 
+    and their interactions with the Sun influence climate and weather patterns. Scientists continue to explore the 
+    mysteries of our Solar System using telescopes and space probes, expanding our knowledge of the universe.
+    """
 
 if __name__ == "__main__":
     # Extract keywords using RAKE
-    keywords = get_keywords_rake(texts, num_keywords=5)
+    keywords = get_keywords_rake(texts, num_keywords=10)
     print("Keywords:", keywords)
     print(type(keywords))

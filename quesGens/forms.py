@@ -1,14 +1,13 @@
 from django import forms
-<<<<<<< HEAD
-
-=======
 from django.contrib.auth.models import User
+
 from .models import Profile
->>>>>>> 789512f4dce158ddf7189f3309af66d633585c19
+
 CHOICES_QA = [
     ('general', 'General'),
-    ('science', 'Science'),
+    ('t5-llm', 'T5 LLM'),
 ]
+
 CHOICES_Key = [
     ('rake', 'Rake'),
     ('spacy', 'Spacy'),

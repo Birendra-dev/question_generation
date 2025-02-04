@@ -6,4 +6,4 @@ class QuesgensConfig(AppConfig):
     name = 'quesGens'
 
     def ready(self):
-     import quesGens.signals
+     pass

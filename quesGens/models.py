@@ -1,8 +1,9 @@
-from django.db import models
-from django.contrib.auth.models import User
-from PIL import Image
-import uuid
 import json
+
+from django.contrib.auth.models import User
+from django.db import models
+from PIL import Image
+
 
 # Create your models here.
 class Profile(models.Model):
