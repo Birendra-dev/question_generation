@@ -245,6 +245,7 @@ def login_view(request):
       
 def is_logged_in(request):
     return JsonResponse({'logged_in': request.user.is_authenticated})
+
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
