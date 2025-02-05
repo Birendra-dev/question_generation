@@ -2,7 +2,7 @@ import ast
 import json
 import random
 from io import BytesIO
-
+import PyPDF2
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import FileResponse, JsonResponse
@@ -24,16 +24,24 @@ from .models import MCQ
 
 def generate_mcq(request):
     if request.method == "POST":
-        form = InputForm(request.POST)
+        form = InputForm(request.POST, request.FILES)
+        print(form.errors)  #viewing any errors in input form
         if form.is_valid():
-            context = clean_text(form.cleaned_data["context"])
+            context = clean_text(form.cleaned_data["context"]).strip()
+            pdfile=form.cleaned_data["pdf_file"]
             num_keywords = int(form.cleaned_data["num_keywords"])
             option_1 = form.cleaned_data["option_1"]
             option_2 = form.cleaned_data["option_2"]
             option_3 = form.cleaned_data["option_3"]
             
             print(f"Raw POST Data: {request.POST}")  # Debugging purpose
-            
+            if not context and pdfile:    # if pdf file is present but no context input
+                    print("trying to read the file")
+                    reader=PyPDF2.PdfReader(pdfile,strict=False)
+                    context=""
+                    for page in reader.pages:
+                        context+=page.extract_text() or ""   #appending each extracted page texts in pdf file to context string.
+            print("reading completed!")   
             # Step 1: Quick Character-Length Check (~2500 chars ≈ 500 tokens)
             if len(context) > 2500:
                 from apps.questionGeneration import question_tokenizer
@@ -74,7 +82,7 @@ def generate_mcq(request):
                 request.session['mcqs'] = json.dumps(mcq_list)  # Store in session
 
             return render(request, "quesGens/result.html", {"context": context, "mcq_list": mcq_list})
-
+        
     return render(request, "quesGens/index.html", {"form": InputForm(), 'user': request.user if request.user.is_authenticated else None})
 
 def result(request):
@@ -335,3 +343,7 @@ def about(request):
 #         'p_form':p_form
 #          }
 #     return render(request,'quesGens/profile.html',context)
+
+
+# anuj
+# 1234

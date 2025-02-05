@@ -25,7 +25,7 @@
                     <hr>
                     <a href="#" class="dropdown-item" onclick="downloadPDF()"><i class="fa-solid fa-globe"></i>
                         Notifications</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
+                    <a href="#" class="dropdown-item" id="dark-mode-toggle"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
                     <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i> Help Center</a>
                     <a href="{% url 'about' %}" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
                      <hr>
@@ -40,7 +40,7 @@
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-right-to-bracket"></i> Login/Signup</a>
                     <hr>
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-globe"></i>Notifications</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
+                    <a href="#" class="dropdown-item" id="dark-mode-toggle"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
                     <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i>Help Center</a>
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
                 </div>
@@ -57,9 +57,9 @@
 
         <h2>Enter Text and Number of Keywords to Generate MCQs</h2>
         <br><br>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group" style="position: relative; border-bottom:2px solid #dcdfe4">
+            <div class="form-group" style="position: relative; border-bottom:1px solid var(--thin-clr)">
                 <!-- <label for="context">Context</label> -->
                 <!-- The textarea -->
                 <textarea id="context" name="context" rows="4"
@@ -201,6 +201,32 @@
     window.onload = function () {
         document.getElementById('context').focus();
     };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+    
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent any default behavior
+    
+                // Toggle the .dark-mode class on <html> for global effect
+                document.documentElement.classList.toggle('darkmode');
+    
+                // Save the user's preference in localStorage
+                localStorage.setItem('theme', 
+                    document.documentElement.classList.contains('darkmode') ? 'dark' : 'light'
+                );
+            });
+        } else {
+            console.error("Element with ID 'dark-mode-toggle' not found.");
+        }
+    
+        // Apply saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.documentElement.add('darkmode');
+        }
+    });
+    
 </script>
 </body>
 

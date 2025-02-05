@@ -1,7 +1,6 @@
 form {
-    background-color: #fff;
-    /* padding: 15px; */
-    border: 1px solid #ccc;
+    background-color: var(--base-clr);
+    border: 1px solid var(--border-clr);
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -21,6 +20,7 @@ textarea {
     height: 150px;
     margin-bottom: 15px;
     outline: none;
+    background-color: var(--base-clr);
 }
 
 textarea:focus {
@@ -104,6 +104,7 @@ button {
     font-size: 17px;
     font-weight: bold;
     background-color: white;
+    /* background-color: var(--base-clr); */
     /* color:green; */
     border-radius: 20px;
     /* border: 1px solid green; */
@@ -344,7 +345,7 @@ h2 {
     position: absolute;
     /* top: 40px; */
     right: 0;
-    background-color: #fff;
+    background-color: var(--drop-clr);
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
@@ -363,7 +364,8 @@ hr {
     align-items: center;
     padding: 10px 15px;
     font-size: 14px;
-    color: #333;
+    /* color: #333; */
+    color: var(--text-clr);
     text-decoration: none;
     cursor: pointer;
 }
