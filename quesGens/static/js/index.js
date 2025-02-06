@@ -130,28 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent any default behavior
-
-            // Toggle the .dark-mode class on <html> for global effect
-            document.documentElement.classList.toggle('dark-mode');
-
-            // Save the user's preference in localStorage
-            localStorage.setItem('theme',
-                document.documentElement.classList.contains('dark-mode') ? 'dark' : 'light'
-            );
-        });
-    } else {
-        console.error("Element with ID 'dark-mode-toggle' not found.");
-    }
-
-    // Apply saved theme preference
-    if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark-mode');
-    }
 
 
 });

@@ -22,10 +22,10 @@
 
         </div>
         {% if user.is_authenticated %}
-        <form action="{% url 'logout' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="logout-btn">logout</button>
-        </form>
+        {% comment %} <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %} {% endcomment %}
+            {% comment %} <button type="submit" class="logout-btn">logout</button> {% endcomment %}
+        {% comment %} </form> {% endcomment %}
         {% endif %}
         {% if mcq_list %}
         {% for mcq in mcq_list %}
@@ -305,6 +305,31 @@
             });
         }
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent any default behavior
+
+                // Toggle the .dark-mode class on <html> for global effect
+                document.documentElement.classList.toggle('darkmode');
+
+                // Save the user's preference in localStorage
+                localStorage.setItem('theme',
+                    document.documentElement.classList.contains('darkmode') ? 'dark' : 'light'
+                );
+            });
+        } else {
+            console.error("Element with ID 'dark-mode-toggle' not found.");
+        }
+
+        // Apply saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('darkmode');
+        }
+    });
 
 </script>
 <script src="{% static 'js/index.js' %}"></script>

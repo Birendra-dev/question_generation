@@ -20,7 +20,7 @@ html.darkmode {
     --nav-clr: #212327 !important;
     --base-clr: #292a2d !important;
     --feild-clr: #404045 !important;
-    --hover-clr: #222533;
+    --hover-clr: #32374d;
     --text-clr: #e6e6ef;
     --border-clr: #404045;
     --line-clr: #42434a;
@@ -233,7 +233,8 @@ input {
     /* border: 1px solid var(--line-clr); */
     border-radius: 1em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: var(--base-clr);
     margin-bottom: 20px;
     padding: min(3em, 15%);
     color: #000;
@@ -261,6 +262,12 @@ input {
     /* Push the .mcq to the top and .container-mini to the bottom */
 }
 
+.buttons-container {
+    position: absolute;
+    top: 90px;
+    right: 600px;
+}
+
 .correct-answer.show {
     display: list-item;
     /* Visible when toggled */
@@ -285,6 +292,15 @@ input {
         border: none;
         padding: 10px;
         max-width: 100%;
+    }
+
+    .buttons-container {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        right: 120px;
+        margin-left: 30px;
+        margin-top: 20px;
     }
 
     #sidebar {

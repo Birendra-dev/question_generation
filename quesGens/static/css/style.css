@@ -103,7 +103,8 @@ button {
 .context-btn {
     font-size: 17px;
     font-weight: bold;
-    background-color: white;
+    /* background-color: white; */
+    background-color: transparent;
     /* background-color: var(--base-clr); */
     /* color:green; */
     border-radius: 20px;
@@ -240,7 +241,9 @@ h2 {
 
 /* ====================================================================[MCQ's RESULT]============================================================================================ */
 .mcq {
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: var(--base-clr);
+    /* background-color: transparent; */
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
@@ -257,7 +260,9 @@ h2 {
 }
 
 .mcq ul li {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
+    /* background-color: var(--feild-clr); */
+    background: transparent;
     padding: 10px;
     margin: 5px 0;
     border-radius: 3px;
@@ -491,4 +496,8 @@ input[type="radio"]:not(:checked) {
 
 .know i {
     margin-top: 3px;
+}
+
+#eyeIcon {
+    color: var(--text-clr);
 }
