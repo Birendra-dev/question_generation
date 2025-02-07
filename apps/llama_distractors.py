@@ -1,6 +1,6 @@
 from langchain_ollama import OllamaLLM
 
-model = OllamaLLM(model="llama3.2:latest")
+model = OllamaLLM(model="mymodel:latest")
 
 def generate_distractors_llama(context: str, question: str, answer: str) -> list:
     messages = [
@@ -13,6 +13,7 @@ def generate_distractors_llama(context: str, question: str, answer: str) -> list
     - Be related to the topic but clearly incorrect
     - Not be obviously wrong or humorous
     - Be unique from each other
+    - Be more than or equal to four.
     - not contain any word similar to actual correct answer
     - Follow a similar structure each time"""
         },

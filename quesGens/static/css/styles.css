@@ -12,6 +12,7 @@
     --feild-clr: #fff;
     --border-clr: #ccc;
     --side-clr: #fff;
+    --context-clr: #172b4d;
     /* The :root pseudo-class matches the root element of the document, which is the <html> element. 
   It is used to define CSS variables (also called custom properties) that can be used throughout the stylesheet.*/
 }
@@ -27,6 +28,7 @@ html.darkmode {
     --side-clr: #fff;
     --drop-clr: #212327;
     --thin-clr: #42434a;
+    --context-clr: #f8faff;
 }
 
 * {
@@ -211,7 +213,7 @@ main p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--base-clr);
     margin-bottom: 20px;
-    padding: min(3em, 15%);
+    padding: min(1em, 15%);
     color: var(--text-clr);
     /* max-width:0%; */
     width: 100%;
@@ -221,6 +223,10 @@ main p {
     p {
         margin-top: 1em
     }
+}
+
+.custom-number-input {
+    color: var(--text-clr);
 }
 
 input {
@@ -237,7 +243,8 @@ input {
     background-color: var(--base-clr);
     margin-bottom: 20px;
     padding: min(3em, 15%);
-    color: #000;
+    /* color: #000; */
+    color: var(--text-clr);
     /* max-width:0%; */
     /* width: 100%; */
     flex: 1;

@@ -31,7 +31,7 @@
                      <hr>
                     <form style="border:0px;" action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
-                        <button style="color:#333; font-size:15px; background-color:transparent;" type="submit" class="logout-btn"><i style="margin-right:12px" class="fa-solid fa-right-from-bracket"></i>Log out</button>
+                        <button style="color:var(--text-clr); font-size:15px; background-color:transparent;" type="submit" class="logout-btn"><i style="margin-right:12px" class="fa-solid fa-right-from-bracket"></i>Log out</button>
                     </form>
 
                 </div>
@@ -63,7 +63,7 @@
                 <!-- <label for="context">Context</label> -->
                 <!-- The textarea -->
                 <textarea id="context" name="context" rows="4"
-                    style="width:100%; color:#172b4d; padding: 10px;line-height:28px; font-size:16px; border:none;"
+                style="width:100%; color:var(--context-clr); padding: 10px;line-height:28px; font-size:16px; border:none;"
                     placeholder='To write text, enter or paste it here and press "generate".'></textarea>
                 <div class="buttons-container">
                     <button class="context-btn" onclick="filltext()" type="button"><i

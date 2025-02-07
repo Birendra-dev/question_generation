@@ -34,6 +34,7 @@ class InputForm(forms.Form):
         min_value=1,
         initial=4,  # Default value, can be changed
         help_text="Select how many keywords to use for generating MCQs",
+        widget=forms.NumberInput(attrs={'class': 'custom-number-input'})
     )
     option_1 = forms.ChoiceField(
         widget=forms.RadioSelect, 

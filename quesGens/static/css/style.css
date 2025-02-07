@@ -40,6 +40,7 @@ input[type="number"] {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    color: var(--text-clr);
 }
 
 input[type="number"]:focus {
@@ -139,7 +140,8 @@ button {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    /* background-color: #fefefe; */
+    background-color: var(--base-clr);
     height: 350px;
     width: 500px;
     /* border-radius: 8px; */
@@ -266,7 +268,8 @@ h2 {
     padding: 10px;
     margin: 5px 0;
     border-radius: 3px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
+    border: 1px solid var(--thin-clr);
 }
 
 
@@ -380,7 +383,8 @@ hr {
 }
 
 .dropdown-item:hover {
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
+    background-color: var(--thin-clr);
 }
 
 .account-img {
