@@ -1,7 +1,6 @@
 form {
-    background-color: #fff;
-    /* padding: 15px; */
-    border: 1px solid #ccc;
+    background-color: var(--base-clr);
+    border: 1px solid var(--border-clr);
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -21,6 +20,7 @@ textarea {
     height: 150px;
     margin-bottom: 15px;
     outline: none;
+    background-color: var(--base-clr);
 }
 
 textarea:focus {
@@ -40,6 +40,7 @@ input[type="number"] {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    color: var(--text-clr);
 }
 
 input[type="number"]:focus {
@@ -103,7 +104,9 @@ button {
 .context-btn {
     font-size: 17px;
     font-weight: bold;
-    background-color: white;
+    /* background-color: white; */
+    background-color: transparent;
+    /* background-color: var(--base-clr); */
     /* color:green; */
     border-radius: 20px;
     /* border: 1px solid green; */
@@ -137,7 +140,8 @@ button {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    /* background-color: #fefefe; */
+    background-color: var(--base-clr);
     height: 350px;
     width: 500px;
     /* border-radius: 8px; */
@@ -239,7 +243,9 @@ h2 {
 
 /* ====================================================================[MCQ's RESULT]============================================================================================ */
 .mcq {
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: var(--base-clr);
+    /* background-color: transparent; */
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
@@ -256,11 +262,14 @@ h2 {
 }
 
 .mcq ul li {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
+    /* background-color: var(--feild-clr); */
+    background: transparent;
     padding: 10px;
     margin: 5px 0;
     border-radius: 3px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
+    border: 1px solid var(--thin-clr);
 }
 
 
@@ -344,7 +353,7 @@ h2 {
     position: absolute;
     /* top: 40px; */
     right: 0;
-    background-color: #fff;
+    background-color: var(--drop-clr);
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
@@ -363,7 +372,8 @@ hr {
     align-items: center;
     padding: 10px 15px;
     font-size: 14px;
-    color: #333;
+    /* color: #333; */
+    color: var(--text-clr);
     text-decoration: none;
     cursor: pointer;
 }
@@ -373,7 +383,8 @@ hr {
 }
 
 .dropdown-item:hover {
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
+    background-color: var(--thin-clr);
 }
 
 .account-img {
@@ -489,4 +500,8 @@ input[type="radio"]:not(:checked) {
 
 .know i {
     margin-top: 3px;
+}
+
+#eyeIcon {
+    color: var(--text-clr);
 }

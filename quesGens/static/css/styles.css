@@ -1,15 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --base-clr: #11121a;
-    --line-clr: #42434a;
-    --hover-clr: #222533;
-    --text-clr: #e6e6ef;
-    --nav-clr: #5e63ff;
+    --base-clr: #fff;
+    /* --line-clr: #dcdfe4; */
+    --thin-clr: #cdd1d8;
+    --drop-clr: #fff;
+    --hover-clr: #2843cb;
+    --text-clr: #000;
+    --nav-clr: #1C59D6;
     --secondary-text-clr: #b0b3c1;
+    --feild-clr: #fff;
+    --border-clr: #ccc;
+    --side-clr: #fff;
+    --context-clr: #172b4d;
     /* The :root pseudo-class matches the root element of the document, which is the <html> element. 
   It is used to define CSS variables (also called custom properties) that can be used throughout the stylesheet.*/
 }
+
+html.darkmode {
+    --nav-clr: #212327 !important;
+    --base-clr: #292a2d !important;
+    --feild-clr: #404045 !important;
+    --hover-clr: #32374d;
+    --text-clr: #e6e6ef;
+    --border-clr: #404045;
+    --line-clr: #42434a;
+    --side-clr: #fff;
+    --drop-clr: #212327;
+    --thin-clr: #42434a;
+    --context-clr: #f8faff;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -25,7 +46,10 @@ body {
     min-height: 100dvh;
     /* background-color: var(--base-clr); */
     /* background-color: #f5f6fa; */
-    background-color:#f7f8f9;
+
+    /* background-color: #f7f8f9; */
+    background-color: var(--base-clr);
+
     /* background-color:#E9E9E9; */
     color: var(--text-clr);
     display: grid;
@@ -33,6 +57,7 @@ body {
     /* first col will take as much as needed by its content and second col take all the remainings. */
 
 }
+
 /* ===================================================================================================================================================== */
 #sidebar {
     box-sizing: border-box;
@@ -40,16 +65,9 @@ body {
     /*height is 100% of viewport */
     width: 250px;
     padding: 5px 1em;
-    /* background-color: var(--base-clr); */
-    /* background-color:#0000ff; */
-    /* background-color:#4A67FF; */
-    /* background-color:#3051f8; */
-    background-color: #1C59D6;
+    background-color: var(--nav-clr);
     /* background-color:#4154f1; */
-
-
     border-right: 1px solid var(--line-clr);
-
     position: sticky;
     /*stick to the top as soon as it reaches top while scrolling*/
     top: 0;
@@ -93,7 +111,7 @@ body {
     border-radius: .5em;
     padding: .85em;
     text-decoration: none;
-    color: var(--text-clr);
+    color: var(--side-clr);
     display: flex;
     align-items: center;
     gap: 1em;
@@ -110,7 +128,7 @@ body {
 
 #sidebar svg {
     flex-shrink: 0;
-    fill: var(--text-clr);
+    fill: var(--side-clr);
 }
 
 #sidebar a span,
@@ -122,8 +140,8 @@ body {
 
 #sidebar a:hover,
 #sidebar .dropdown-btn:hover {
-    /* background-color: var(--hover-clr); */
-    background-color: #2843cb;
+    background-color: var(--hover-clr);
+    /* background-color: #2843cb; */
 }
 
 #sidebar .sub-menu {
@@ -166,10 +184,11 @@ body {
 }
 
 #toggle-btn:hover {
-    /* background-color: var(--hover-clr); */
-    background-color: #2843cb;
+    background-color: var(--hover-clr);
+    /* background-color: #2843cb; */
 
 }
+
 /* ===================================================================================================================================================== */
 main {
     /*main will take remaining space while the sidebar width change since col in grid is set to 1fr*/
@@ -182,19 +201,20 @@ main {
 
 main p {
     /* color: var(--secondary-text-clr); */
-    color:#6b7280;
+    color: #6b7280;
     margin-top: 5px;
     margin-bottom: 15px;
 }
+
 /* for all page */
 .container {
     /* border: 1px solid var(--line-clr); */
     border-radius: 1em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: var(--base-clr);
     margin-bottom: 20px;
-    padding: min(3em, 15%);
-    color: #000;
+    padding: min(1em, 15%);
+    color: var(--text-clr);
     /* max-width:0%; */
     width: 100%;
     flex: 1;
@@ -204,36 +224,62 @@ main p {
         margin-top: 1em
     }
 }
+
+.custom-number-input {
+    color: var(--text-clr);
+}
+
+input {
+    /* background-color: var(--line-clr); */
+    background: transparent;
+}
+
 /* for history page */
-.container-next{  
-     /* border: 1px solid var(--line-clr); */
-     border-radius: 1em;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-     background-color: #fff;
-     margin-bottom: 20px;
-     padding: min(3em, 15%);
-     color: #000;
-     /* max-width:0%; */
-     /* width: 100%; */
-     flex: 1;
-     margin:3px;
-     h2,
-     p {
-         margin-top: 1em
-     }
- 
- 
-     width: 400px; /* Limit container width to fit multiple items per row */
-     flex: 1 1 300px; /* Allow flex item to grow and shrink */
+.container-next {
+    /* border: 1px solid var(--line-clr); */
+    border-radius: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* background-color: #fff; */
+    background-color: var(--base-clr);
+    margin-bottom: 20px;
+    padding: min(3em, 15%);
+    /* color: #000; */
+    color: var(--text-clr);
+    /* max-width:0%; */
+    /* width: 100%; */
+    flex: 1;
+    margin: 3px;
+
+    h2,
+    p {
+        margin-top: 1em
+    }
+
+
+    width: 400px;
+    /* Limit container width to fit multiple items per row */
+    flex: 1 1 300px;
+    /* Allow flex item to grow and shrink */
 
 
     display: flex;
-    flex-direction: column; /* Stack child elements vertically */
-    justify-content: space-between; /* Push the .mcq to the top and .container-mini to the bottom */
+    flex-direction: column;
+    /* Stack child elements vertically */
+    justify-content: space-between;
+    /* Push the .mcq to the top and .container-mini to the bottom */
 }
+
+.buttons-container {
+    position: absolute;
+    top: 90px;
+    right: 600px;
+}
+
 .correct-answer.show {
-    display: list-item; /* Visible when toggled */
+    display: list-item;
+    /* Visible when toggled */
 }
+
 .regular-option {
     color: #000;
 }
@@ -253,6 +299,15 @@ main p {
         border: none;
         padding: 10px;
         max-width: 100%;
+    }
+
+    .buttons-container {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        right: 120px;
+        margin-left: 30px;
+        margin-top: 20px;
     }
 
     #sidebar {

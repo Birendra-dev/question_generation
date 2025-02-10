@@ -25,13 +25,13 @@
                     <hr>
                     <a href="#" class="dropdown-item" onclick="downloadPDF()"><i class="fa-solid fa-globe"></i>
                         Notifications</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
+                    <a href="#" class="dropdown-item" id="dark-mode-toggle"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
                     <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i> Help Center</a>
                     <a href="{% url 'about' %}" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
                      <hr>
                     <form style="border:0px;" action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
-                        <button style="color:#333; font-size:15px; background-color:transparent;" type="submit" class="logout-btn"><i style="margin-right:12px" class="fa-solid fa-right-from-bracket"></i>Log out</button>
+                        <button style="color:var(--text-clr); font-size:15px; background-color:transparent;" type="submit" class="logout-btn"><i style="margin-right:12px" class="fa-solid fa-right-from-bracket"></i>Log out</button>
                     </form>
 
                 </div>
@@ -40,7 +40,7 @@
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-right-to-bracket"></i> Login/Signup</a>
                     <hr>
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-globe"></i>Notifications</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
+                    <a href="#" class="dropdown-item" id="dark-mode-toggle"><i class="fa-solid fa-toggle-on"></i> Dark mode</a>
                     <a href="#" class="dropdown-item"><i class="fas fa-file-word"></i>Help Center</a>
                     <a href="#" class="dropdown-item"><i class="fa-solid fa-address-card"></i> Contact us</a>
                 </div>
@@ -57,15 +57,15 @@
 
         <h2>Enter Text and Number of Keywords to Generate MCQs</h2>
         <br><br>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group" style="position: relative; border-bottom:2px solid #dcdfe4">
+            <div class="form-group" style="position: relative; border-bottom:1px solid var(--thin-clr)">
                 <!-- <label for="context">Context</label> -->
                 <!-- The textarea -->
                 <textarea id="context" name="context" rows="4"
-                    style="width:100%; color:#172b4d; padding: 10px;line-height:28px; font-size:16px; border:none;"
+                style="width:100%; color:var(--context-clr); padding: 10px;line-height:28px; font-size:16px; border:none;"
                     placeholder='To write text, enter or paste it here and press "generate".'></textarea>
-                <div class="buttons-container" style="position: absolute; top: 90px; right: 600px;">
+                <div class="buttons-container">
                     <button class="context-btn" onclick="filltext()" type="button"><i
                             class="fa-regular fa-file-lines"></i> Try Sample Text</button>
                     <button class="context-btn" type="button"> <i class="fa-regular fa-paste"></i> Paste Text</button>
@@ -201,6 +201,32 @@
     window.onload = function () {
         document.getElementById('context').focus();
     };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+    
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent any default behavior
+    
+                // Toggle the .dark-mode class on <html> for global effect
+                document.documentElement.classList.toggle('darkmode');
+    
+                // Save the user's preference in localStorage
+                localStorage.setItem('theme', 
+                    document.documentElement.classList.contains('darkmode') ? 'dark' : 'light'
+                );
+            });
+        } else {
+            console.error("Element with ID 'dark-mode-toggle' not found.");
+        }
+    
+        // Apply saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('darkmode');
+        }
+    });
+    
 </script>
 </body>
 

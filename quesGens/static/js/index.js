@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
             alert(data.message); // Display error message
         }
     };
-   
+
 
 
 

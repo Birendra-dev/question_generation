@@ -22,7 +22,8 @@ CHOICES_Distractors = [
 class InputForm(forms.Form):
     context = forms.CharField(
         widget=forms.Textarea(attrs={'placeholder': 'Enter your context here...'}), 
-        label="Context")
+        label="Context",
+        required=False)
     pdf_file = forms.FileField(
         label="Upload PDF",
         help_text="Upload a PDF file for content extraction",
@@ -33,6 +34,7 @@ class InputForm(forms.Form):
         min_value=1,
         initial=4,  # Default value, can be changed
         help_text="Select how many keywords to use for generating MCQs",
+        widget=forms.NumberInput(attrs={'class': 'custom-number-input'})
     )
     option_1 = forms.ChoiceField(
         widget=forms.RadioSelect, 
