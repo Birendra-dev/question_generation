@@ -35,3 +35,9 @@ def get_question(context, answer, model, tokenizer):
     # Clean up the generated question
     Question = dec[0].replace("question:", "").strip()
     return Question
+
+if __name__ == "__main__":
+    context = "The Treaty of Versailles, signed in 1919, officially ended World War I. It imposed heavy reparations on Germany and significantly reshaped the political landscape of Europe."
+    answer = "World "
+    question = get_question(context, answer, question_model, question_tokenizer)
+    print(question)
