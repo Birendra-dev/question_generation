@@ -5,7 +5,7 @@ from .models import Profile
 
 CHOICES_QA = [
     ('general', 'General'),
-    ('t5-llm', 'T5 LLM'),
+    ('t5-llm', 'Science'),  # lowercase to match view logic
 ]
 
 CHOICES_Key = [

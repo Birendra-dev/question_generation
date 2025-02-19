@@ -155,22 +155,31 @@ def generate_questions_and_distractors(option_1, option_3, context, keywords):
     distractors_dict = {}
 
     # Lazy load models for question generation and distractor generation
-    if option_1 == "t5-llm":
+    question_model, question_tokenizer = None, None
+    dis_model, dis_tokenizer = None, None
+
+    if option_1 == "general":
         from apps.questionGeneration import get_question, question_model, question_tokenizer
+    elif option_1 == "t5-llm":
+        from apps.question_gen_science import get_question_science, question_model, question_tokenizer
+
     if option_3 == "t5-llm":
         from apps.t5distractors import dis_model, dis_tokenizer, get_distractors_t5
-    if option_3 == "llama":
+    elif option_3 == "llama":
         from apps.llama_distractors import generate_distractors_llama
-    if option_3 == "s2v":
+    elif option_3 == "s2v":
         from apps.s2vdistractors import generate_distractors, s2v
 
     for keyword in keywords:
         # Generate question
-        if option_1 == "t5-llm":
+        if option_1 == "general":
             question = get_question(context, keyword, question_model, question_tokenizer)
+        elif option_1 == "t5-llm":
+            question = get_question_science(context, keyword, question_model, question_tokenizer)
         else:
             question = f"What is {keyword}?"  # Fallback question
-            print(f"Option 1: {option_1}, Using T5 Model: {option_1 == 't5-llm'}")
+
+        print(f"Option 1: {option_1}, Using T5 Model: {option_1 in ['general', 't5-llm']}")  # Debugging statement
 
         # Generate distractors
         if option_3 == "t5-llm":
@@ -192,6 +201,7 @@ def generate_questions_and_distractors(option_1, option_3, context, keywords):
         distractors_dict[keyword] = distractors
 
     return questions_dict, distractors_dict
+
 
 
 def create_mcq_list(keywords, questions_dict, distractors_dict):
