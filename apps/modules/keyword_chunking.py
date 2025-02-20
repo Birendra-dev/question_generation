@@ -1,4 +1,5 @@
 import re
+import os
 import spacy
 from collections import Counter
 from typing import List
@@ -6,7 +7,14 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from transformers import PreTrainedTokenizerFast
 
 # Load spaCy for sentence tokenization and keyword extraction
-nlp = spacy.load("en_core_web_sm")
+# Check if spaCy model is downloaded
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    print("spaCy model 'en_core_web_sm' not found. Downloading...")
+    # Download spaCy model if not found
+    os.system("python -m spacy download en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
 def extract_keywords(text: str, num_keywords: int = 10) -> List[str]:
     """Extracts top N keywords using a simple frequency-based approach."""

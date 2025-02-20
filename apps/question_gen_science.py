@@ -1,13 +1,13 @@
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 
-trained_model_path = "apps/t5-general/model"
-trained_tokenizer = "apps/t5-general/tokenizer"
+trained_model_path = "apps/t5-science/model"
+trained_tokenizer = "apps/t5-science/tokenizer"
 
 # Load the model and tokenizer
 question_model = T5ForConditionalGeneration.from_pretrained(trained_model_path)
 question_tokenizer = T5Tokenizer.from_pretrained(trained_tokenizer, legacy=False)
 
-def get_question(context, answer, model, tokenizer):
+def get_question_science(context, answer, model, tokenizer):
     text = "context: {} answer: {}".format(context, answer)
     encoding = tokenizer.encode_plus(
         text,
@@ -37,7 +37,7 @@ def get_question(context, answer, model, tokenizer):
     return Question
 
 if __name__ == "__main__":
-    context = "The capital of France is Paris."
-    answer = "Paris"
-    question = get_question(context, answer, question_model, question_tokenizer)
+    context = "Mitochondria are known as the powerhouse of the cell."
+    answer = "Mitochondria"
+    question = get_question_science(context, answer, question_model, question_tokenizer)
     print(question)
