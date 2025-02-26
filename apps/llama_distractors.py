@@ -1,10 +1,6 @@
 from langchain_ollama import OllamaLLM
 
-<<<<<<< HEAD
-model = OllamaLLM(model="distractor_generation:latest")
-=======
 model = OllamaLLM(model="mymodel:latest")
->>>>>>> 78d46ad89d68184216b5c344097976bd15c86aaa
 
 def generate_distractors_llama(context: str, question: str, answer: str) -> list:
     messages = [
