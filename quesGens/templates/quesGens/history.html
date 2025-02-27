@@ -23,7 +23,7 @@
             <h3 style="font-size:15px; color: #000;">created on {{ entry.created_at|date:"Y-m-d H:i" }}</h3>
             <br>
             {% if request.user.is_authenticated %}
-            <form method="POST" action="{% url 'delete_history' entry.id %}"><!-- each entry in history its associated id,so here when the form submit the url with current entry id gets triggered and run the delete history view function to delete the particular entry -->
+            <form method="POST" class="unique" action="{% url 'delete_history' entry.id %}"><!-- each entry in history its associated id,so here when the form submit the url with current entry id gets triggered and run the delete history view function to delete the particular entry -->
                  {% csrf_token %}
                 <button type="submit" class="delete-btn">Delete</button>
             </form>
