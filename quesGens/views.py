@@ -331,7 +331,8 @@ def delete_history(request, entry_id):
     return redirect('history')
 def about(request):
     return render(request,'quesGens/about.html')
-
+def quiz(request):
+    return render(request,'quesGens/quiz.html')
 
 # @login_required
 # def profile(request):

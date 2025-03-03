@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <main>
+    <div id="notification" class="hidden fixed top-5 right-5 p-4 rounded-lg shadow-lg text-white"></div>
     <div class="container">
         <div class="header">
             <h2>MCQ Generator</h2>
@@ -64,7 +65,7 @@
                 <!-- The textarea -->
                 <textarea id="context" name="context" rows="4"
                 style="width:100%; color:var(--context-clr); padding: 10px;line-height:28px; font-size:16px; border:none;"
-                    placeholder='To write text, enter or paste it here and press "generate".'></textarea>
+                    placeholder='To write text, type or paste it here and press "generate".'></textarea>
                 <div class="buttons-container">
                     <button class="context-btn" onclick="filltext()" type="button"><i
                             class="fa-regular fa-file-lines"></i> Try Sample Text</button>
@@ -244,6 +245,7 @@
     }
     
 </script>
+
 </body>
 
 </html>

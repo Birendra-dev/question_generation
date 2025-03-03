@@ -1,7 +1,7 @@
 {% extends 'quesGens/base.html' %}
 {% block content %}
 <main>
-    <div class="container">
+    <div style="border:none" class="container">
         <h2>Test Your Knowledge</h2>
         <br>
         <form method="POST">
@@ -23,7 +23,7 @@
             </div>
             {% endfor %}
 
-            <button type="submit" class="submit-btn">Submit</button>
+            <button type="submit" id="sub" class="submit-btn">Submit</button>
         </form>
     </div>
 </main>
