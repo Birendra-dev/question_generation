@@ -5,7 +5,7 @@ from nltk.corpus import wordnet as wn
 from sense2vec import Sense2Vec
 
 # Configure NLTK to use a custom data directory
-NLTK_DATA_DIR = 'D:\\Files\\question_answering\\.venv\\Lib\\nltk_data'
+NLTK_DATA_DIR = 'D:\\Files\\question_generation\\.venv\\Lib\\nltk_data'
 nltk.data.path.append(NLTK_DATA_DIR)
 
 # Check for WordNet and download if not present

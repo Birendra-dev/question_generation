@@ -7,13 +7,13 @@ from flashtext import KeywordProcessor
 from nltk.corpus import stopwords
 
 # Set custom NLTK data path
-nltk.data.path.append('D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
+nltk.data.path.append('D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
 
 # Ensure required nltk resources are available
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
-    nltk.download('stopwords', download_dir='D:\\Files\\question_answering\\.venv\\Lib\\nltk_data')
+    nltk.download('stopwords', download_dir='D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
 
 # Check if spaCy model is downloaded
 try:

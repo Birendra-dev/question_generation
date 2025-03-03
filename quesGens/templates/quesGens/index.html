@@ -75,8 +75,8 @@
             </div>
             <div style="padding:15px;" class="form-group2">
                 <div class="filo">
-                    <input type="file" id="pdf_file" name="pdf_file" class="file-input" />
-                    <label for="pdf_file" class="file-input-label"><i class="fa-solid fa-cloud-arrow-up"></i> Upload
+                    <input type="file" id="pdf_file" name="pdf_file" class="file-input" onchange="uploadFile()"/>
+                    <label for="pdf_file" id="uploadLabel" class="file-input-label"><i class="fa-solid fa-cloud-arrow-up"></i> Upload
                         pdf</label>
                 </div>
                 <br>
@@ -226,6 +226,22 @@
             document.documentElement.classList.add('darkmode');
         }
     });
+    function uploadFile() {
+        let fileInput = document.getElementById("pdf_file");
+        let uploadLabel = document.getElementById("uploadLabel");
+        let uploadStatus = document.getElementById("uploadStatus");
+    
+        if (fileInput.files.length > 0) {
+            // Show uploading state
+            uploadLabel.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
+    
+            // Simulate file upload delay (you can replace this with actual AJAX request)
+            setTimeout(() => {
+                uploadLabel.innerHTML = '<i class="fa-solid fa-check-circle"></i> File Uploaded!';
+                uploadLabel.style.color = "white";
+            }, 2000); // Simulating 2 seconds upload time
+        }
+    }
     
 </script>
 </body>
