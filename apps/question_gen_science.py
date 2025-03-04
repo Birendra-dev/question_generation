@@ -1,6 +1,6 @@
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 
-trained_model_path = "apps/t5-science/model"
+trained_model_path = "apps/t5-science/mo"
 trained_tokenizer = "apps/t5-science/tokenizer"
 
 # Load the model and tokenizer
