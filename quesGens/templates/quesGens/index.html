@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <main>
+    <div id="notification" class="hidden fixed top-5 right-5 p-4 rounded-lg shadow-lg text-white"></div>
     <div class="container">
         <div class="header">
             <h2>MCQ Generator</h2>
@@ -64,7 +65,7 @@
                 <!-- The textarea -->
                 <textarea id="context" name="context" rows="4"
                 style="width:100%; color:var(--context-clr); padding: 10px;line-height:28px; font-size:16px; border:none;"
-                    placeholder='To write text, enter or paste it here and press "generate".'></textarea>
+                    placeholder='To write text, type or paste it here and press "generate".'></textarea>
                 <div class="buttons-container">
                     <button class="context-btn" onclick="filltext()" type="button"><i
                             class="fa-regular fa-file-lines"></i> Try Sample Text</button>
@@ -79,23 +80,48 @@
                     <label for="pdf_file" id="uploadLabel" class="file-input-label"><i class="fa-solid fa-cloud-arrow-up"></i> Upload
                         pdf</label>
                 </div>
-                <br>
+                
                 {{ form.num_keywords.label_tag }}
                 {{ form.num_keywords }}
                 {{ form.num_keywords.help_text }}
 
-
                 <div>
                     {{ form.option_1.label_tag }}
-                    {{ form.option_1 }}
+                    {% comment %} {{ form.option_1 }} {% endcomment %}
+                    {% for radio in form.option_1 %}
+                    <div class="radio-container">
+                        {{ radio.tag }}
+                    
+                        <span class="tip">{{ form.option_1.help_text }}</span>
+                        {{ radio.choice_label }}
+                    </div>
+                     {% endfor %}
                 </div>
+                
                 <div>
                     {{ form.option_2.label_tag }}
-                    {{ form.option_2 }}
+                    
+                    {% comment %} {{ form.option_2 }} {% endcomment %}
+                    {% for radio in form.option_2 %}
+                    <div class="radio-container">
+                        {{ radio.tag }}
+                        <span class="tip">{{ form.option_3.help_text }}</span>
+                        {{ radio.choice_label }}
+                    </div>
+                    {% endfor %}
                 </div>
+            
                 <div>
                     {{ form.option_3.label_tag }}
-                    {{ form.option_3 }}
+                    
+                    {% comment %} {{ form.option_3 }} {% endcomment %}
+                    {% for radio in form.option_3 %}
+        <div class="radio-container">
+            {{ radio.tag }}
+            <span class="tip">{{ form.option_3.help_text }}</span>
+            {{ radio.choice_label }}
+        </div>
+          {% endfor %}
                 </div>
                 <button type="submit" id="generateBtn">
                     <span class="btn-text">Generate MCQs</span>
@@ -242,8 +268,12 @@
             }, 2000); // Simulating 2 seconds upload time
         }
     }
+
+  
+    
     
 </script>
+
 </body>
 
 </html>

@@ -10,6 +10,7 @@
     <link rel="icon" href="{% static 'img/favicon.ico' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://kit.fontawesome.com/f2ae13f1ba.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/index.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
@@ -58,8 +59,9 @@
                     </svg>
                 </button>
             </li>
+
             <li id="action">
-                <a href="{% url 'generate_mcq' %}">
+                <a href="{% url 'generate_mcq' %}" onclick="setActive(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e8eaed">
                         <path
@@ -68,9 +70,10 @@
                     <span>Home</span>
                 </a>
             </li>
+
             <li id="action">
                
-                <a href="{% url 'result' %}">
+                <a href="{% url 'result' %}" onclick="setActive(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e8eaed">
                         <path
@@ -78,11 +81,13 @@
                     </svg>
                     <span>dashboard</span>
                   </form>
+                 
                    
                 </a>
             </li>
             <li id="action">
-                <button onclick=toggleSubMenu(this) class="dropdown-btn">
+
+                <button onclick=toggleSubMenu(this) class="dropdown-btn" onclick="setActive(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e8eaed">
                         <path
@@ -97,13 +102,13 @@
                 </button>
                 <ul class="sub-menu">
                     <div>
-                        <li><a href="{% url 'history' %}">Generated-MCQs</a></li>
-                        <li><a href="#">MCQ-test</a></li>
+                        <li><a href="{% url 'history' %}" onclick="setActive(this)">Generated-MCQs</a></li>
+                        <li><a href="#" onclick="setActive(this)">MCQ-test</a></li>
                     </div>
                 </ul>
             </li>
             <li>
-                <button onclick=toggleSubMenu(this) class="dropdown-btn">
+                <button onclick=toggleSubMenu(this) class="dropdown-btn" onclick="setActive(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e8eaed">
                         <path
@@ -118,13 +123,13 @@
                 </button>
                 <ul class="sub-menu">
                     <div>
-                        <li><a href="#">Quiz</a></li>
-                        <li><a href="#">Books</a></li>
+                        <li><a href="{% url 'quiz' %}" onclick="setActive(this)">Quiz</a></li>
+                        <li><a href="#" onclick="setActive(this)">Books</a></li>
                     </div>
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="#" onclick="setActive(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e8eaed">
                         <path
@@ -134,7 +139,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" onclick="setActive(this)">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#e8eaed">
                         <path
@@ -147,12 +152,12 @@
             <div style="margin-top:340px;">
                 <hr>
             <li>
-                    <a href="#">
+                    <a href="{% url 'about' %}" onclick="setActive(this)">
                         <i class="fa-regular fa-address-book"></i><span> Contacts</span>
                      </a>
             </li>
             <li>
-               <a href="#">
+               <a href="#" onclick="setActive(this)">
                     <i class="fa-solid fa-comment-dots"></i><span> feedback</span>
                 </a>
             </li>

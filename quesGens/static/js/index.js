@@ -127,19 +127,47 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             alert(data.message); // Display error message
         }
+        // showNotification(data.message, data.success);
+
+        // if (data.success) {
+        //     setTimeout(() => {
+        //         modal.style.display = "none"; // Close modal after success
+        //         location.reload(); // Reload page to reflect logged-in state
+        //     }, 2000); // Delay before reloading
+        // }
     };
 
-    const listItems = document.querySelectorAll("li#action");
 
-    listItems.forEach(item => {
-        item.addEventListener("click", function () {
-            // Remove "active" class from all list items
-            listItems.forEach(li => li.classList.remove("active"));
 
-            // Add "active" class to the clicked list item
-            this.classList.add("active");
-        });
-    });
+
+
+
+
+    // function showNotification(message, isSuccess) {
+
+    //     let notification = document.createElement("div");
+    //     notification.textContent = message;
+    //     notification.className = `fixed top-5 right-5 p-4 rounded-lg shadow-lg text-white text-sm font-semibold ${isSuccess ? 'bg-green-500' : 'bg-red-500'
+    //         }`;
+
+    //     document.body.appendChild(notification);
+
+    //     setTimeout(() => {
+    //         notification.remove(); // Remove notification after 3 seconds
+    //     }, 3000);
+    // }
+
+    // const listItems = document.querySelectorAll("li#action");
+
+    // listItems.forEach(item => {
+    //     item.addEventListener("click", function () {
+    //         // Remove "active" class from all list items
+    //         listItems.forEach(li => li.classList.remove("active"));
+
+    //         // Add "active" class to the clicked list item
+    //         this.classList.add("active");
+    //     });
+    // });
 
 
 });
