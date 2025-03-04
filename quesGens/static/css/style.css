@@ -5,11 +5,12 @@ form {
     box-sizing: border-box;
 }
 
-.active {
-    background-color: #4CAF50;
-    /* Change this to whatever color you like */
-    color: white;
+#sidebar li.active {
+    background-color: #2843cb;
+    color: #fff;
+    border-radius: 5px;
 }
+
 
 .form-group {
     padding: 20px;
@@ -535,8 +536,8 @@ input[type="radio"]:not(:checked) {
 
 
 .quiz-header {
-    background-color: #007BFF;
-    color: white;
+    background-color: var(--nav-clr);
+    color: var(--side-clr);
     padding: 20px;
     text-align: center;
 }
@@ -554,7 +555,7 @@ h1 {
 }
 
 .quiz-card {
-    background-color: white;
+    background-color: var(--base--clr);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -571,24 +572,14 @@ h1 {
 .quiz-card-title {
     font-size: 1.5rem;
     text-align: center;
-    color: #007BFF;
+    color: var(--text-clr);
 }
 
 .quiz-list {
     display: none;
     margin-top: 20px;
     font-size: 1rem;
-    color: #555;
-}
-
-.quiz-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    color: var(--text-clr);
 }
 
 @media (max-width: 768px) {
@@ -596,4 +587,52 @@ h1 {
         flex-direction: column;
         align-items: center;
     }
+}
+
+
+.radio-container {
+    position: relative;
+    display: block;
+    margin: 5px 0;
+}
+
+.radio-container input {
+    margin-right: 5px;
+}
+
+.tip {
+    visibility: hidden;
+    opacity: 0;
+    background-color: var(--nav-clr);
+    color: white;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 5px;
+    position: absolute;
+    top: -10px;
+    /* Position above the choice */
+    left: 25%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.tip::before {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 15px;
+    /* Adjust width to control extension */
+    height: 10px;
+    /* Adjust height to control the curve */
+    background-color: var(--nav-clr);
+    border-bottom-left-radius: 10px;
+}
+
+.radio-container:hover .tip {
+    visibility: visible;
+    opacity: 1;
 }

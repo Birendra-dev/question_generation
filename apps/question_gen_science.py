@@ -1,7 +1,7 @@
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 
 trained_model_path = "apps/t5-science/model"
-trained_tokenizer = "apps/t5-science/tokenizer"
+trained_tokenizer = "apps/t5-science/model"
 
 # Load the model and tokenizer
 question_model = T5ForConditionalGeneration.from_pretrained(trained_model_path)

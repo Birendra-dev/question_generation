@@ -331,24 +331,8 @@
         }
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get all the links
-    const items = document.querySelectorAll('nav ul li a');
-
-    // Add event listeners to all links
-    items.forEach(function (item) {
-        item.addEventListener('click', function () {
-            // Remove 'active' class from all <li> elements
-            const allItems = document.querySelectorAll('nav ul li');
-            allItems.forEach(function (el) {
-                el.classList.remove('active');
-            });
-
-            // Add 'active' class to the clicked <li>
-            item.closest('li').classList.add('active');
-        });
-    });
-});
+    
+  
 </script>
 <script src="{% static 'js/index.js' %}"></script>
 </body>

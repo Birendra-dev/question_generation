@@ -139,25 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    const defaultActive = document.querySelector('#action');
-    defaultActive.classList.add('active');
 
-    // Get all links inside the sidebar
-    const items = document.querySelectorAll('nav ul li a');
-
-    // Add event listeners to all links
-    items.forEach(function (item) {
-        item.addEventListener('click', function () {
-            // Remove 'active' class from all <li> elements
-            const allItems = document.querySelectorAll('nav ul li');
-            allItems.forEach(function (el) {
-                el.classList.remove('active');
-            });
-
-            // Add 'active' class to the clicked <li>
-            item.closest('li').classList.add('active');
-        });
-    });
 
 
 
@@ -175,17 +157,17 @@ document.addEventListener("DOMContentLoaded", function () {
     //     }, 3000);
     // }
 
-    const listItems = document.querySelectorAll("li#action");
+    // const listItems = document.querySelectorAll("li#action");
 
-    listItems.forEach(item => {
-        item.addEventListener("click", function () {
-            // Remove "active" class from all list items
-            listItems.forEach(li => li.classList.remove("active"));
+    // listItems.forEach(item => {
+    //     item.addEventListener("click", function () {
+    //         // Remove "active" class from all list items
+    //         listItems.forEach(li => li.classList.remove("active"));
 
-            // Add "active" class to the clicked list item
-            this.classList.add("active");
-        });
-    });
+    //         // Add "active" class to the clicked list item
+    //         this.classList.add("active");
+    //     });
+    // });
 
 
 });

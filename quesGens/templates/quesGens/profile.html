@@ -27,6 +27,22 @@
     </div>
 </main>
 <script src="{% static 'js/index.js' %}"></script>
+<script>
+    function setActive(element) {
+        // Remove 'active' class from all <li> elements
+        document.querySelectorAll("#sidebar li").forEach((li) => {
+            li.classList.remove("active");
+        });
+    
+        // Add 'active' class to the clicked <li> element
+        element.parentElement.classList.add("active");
+    }
+    
+    // Set 'Home' as default active when page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector("#sidebar li:first-child").classList.add("active");
+    });
+</script>
 </body>
 
 </html>
