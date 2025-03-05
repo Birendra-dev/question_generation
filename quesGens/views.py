@@ -142,8 +142,9 @@ def extract_keywords_based_on_option(option, context, num_keywords):
         from apps.rakeKeyword import get_keywords_rake
         return get_keywords_rake(context, num_keywords)
     
-    elif option == 'distilBERT':
+    elif option == 'distilbert':
         from apps.distilBERTKeyword import extract_keywords
+        print('Extracting keywords using DistilBERT...')
         return extract_keywords(context, num_keywords=num_keywords)
     
     return []

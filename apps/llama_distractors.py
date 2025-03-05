@@ -1,3 +1,4 @@
+import re
 from langchain_ollama import OllamaLLM
 
 model = OllamaLLM(model="mymodel:latest")
@@ -34,10 +35,19 @@ def generate_distractors_llama(context: str, question: str, answer: str) -> list
     ]
     
     response = model.invoke(messages)
-    return [opt.strip() for opt in response.split(',') if opt.strip()][:3]
+    
+    # Clean the response with regex to extract only text content
+    cleaned_response = re.sub(r'[\[\]{}"`*]', '', response)
+    
+    # Split by comma and remove any leading/trailing whitespace
+    distractors = [opt.strip() for opt in cleaned_response.split(',') if opt.strip()]
+    
+    return distractors[:3]
+
 
 if __name__ == "__main__":
-    context ="""The human heart is an organ that pumps blood through the body via the circulatory system."""
-    question = "What is the human heart?"
-    answer = "An organ that pumps blood"
-    print(generate_distractors_llama(context=context, question=question, answer=answer))
+    context = "Mitochondria are known as the powerhouse of the cell."
+    question = "What are mitochondria known as?"
+    answer = "Mitochondria"
+    distractors = generate_distractors_llama(context, question, answer)
+    print(distractors)
