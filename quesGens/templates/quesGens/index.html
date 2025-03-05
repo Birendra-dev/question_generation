@@ -94,9 +94,9 @@
                     
                         <!-- <span class="tip">{{ form.option_1.help_text }}</span> -->
                         {% if radio.data.value == 'general' %}
-                           <span class="tip">General question generation based on context</span>
+                           <span class="tip">For General Question Generation</span>
                         {% elif radio.data.value == 't5-llm' %}
-                           <span class="tip">Science-based question generation using T5-LLM</span>
+                           <span class="tip">For Science Question Generation</span>
                         {% endif %}
                         {{ radio.choice_label }}
                     </div>
@@ -111,11 +111,11 @@
                     <div class="radio-container">
                         {{ radio.tag }}
                             {% if radio.data.value == 'rake' %}
-                                <span class="tip">RAKE: Rapid Automatic Keyword Extraction</span>
+                                <span class="tip">For Quick Result</span>
                             {% elif radio.data.value == 'spacy' %}
-                                <span class="tip">Spacy: NLP-based keyword extraction</span>
+                                <span class="tip">For Accurate Result</span>
                             {% elif radio.data.value == 'distilbert' %}
-                                <span class="tip">DistilBERT: Transformer-based keyword extraction</span>
+                                <span class="tip">For Science related Context</span>
                             {% endif %}
                         {{ radio.choice_label }}
                     </div>
@@ -130,11 +130,11 @@
         <div class="radio-container">
             {{ radio.tag }}
             {% if radio.data.value == 's2v' %}
-               <span class="tip">Sense2Vec: Similar word-based distractors</span>
+               <span class="tip">For Quick Result</span>
             {% elif radio.data.value == 't5-llm' %}
-               <span class="tip">LLM T5: Context-based distractor generation</span>
+               <span class="tip">For General</span>
             {% elif radio.data.value == 'llama' %}
-               <span class="tip">LLAMA: Advanced language model-based distractors</span>
+               <span class="tip">For Science</span>
             {% endif %}
             {{ radio.choice_label }}
         </div>

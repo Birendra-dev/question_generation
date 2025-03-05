@@ -40,19 +40,19 @@ class InputForm(forms.Form):
         widget=forms.RadioSelect, 
         choices=CHOICES_QA, 
         label="Select an option for Question Generation",
-        help_text="For general tasks, select 'General'. For science-related tasks, select 'Science'"
+        # help_text="For general tasks, select 'General'. For science-related tasks, select 'Science'"
     )
     option_2 = forms.ChoiceField(
         widget=forms.RadioSelect, 
         choices=CHOICES_Key, 
         label="Select an option for keyword extraction",
-        help_text="General -->'Rake', Science -->'LLM DistilBERT' and 'Spacy' for efficient keyword extraction"
+        # help_text="General -->'Rake', Science -->'LLM DistilBERT' and 'Spacy' for efficient keyword extraction"
     )
     option_3 = forms.ChoiceField(
         widget=forms.RadioSelect, 
         choices=CHOICES_Distractors, 
         label="Select an option for distractors generation",
-        help_text="General -->'Sense2Vec', science -->'LLM T5' and 'LLAMA' for efficient distractors generation"
+        # help_text="General -->'Sense2Vec', science -->'LLM T5' and 'LLAMA' for efficient distractors generation"
     )
 
     def __init__(self, *args, **kwargs):
