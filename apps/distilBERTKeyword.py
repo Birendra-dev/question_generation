@@ -6,7 +6,7 @@ from transformers import AutoModelForTokenClassification, AutoTokenizer
 from transformers.pipelines import AggregationStrategy, TokenClassificationPipeline
 
 base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of `t5distractors.py`
-base_tokenizer_path = os.path.join(base_dir, "base-distilBERT", "tokenizer")
+base_tokenizer_path = os.path.join(base_dir,"base-distilBERT", "tokenizer")
 base_model_path = os.path.join(base_dir,"base-distilBERT", "model")
 adapter_model_path = os.path.join(base_dir,"base-distilBERT", "adapter_model")
 
