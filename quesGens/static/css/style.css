@@ -594,12 +594,15 @@ h1 {
     position: relative;
     display: block;
     margin: 5px 0;
+    cursor:pointer;
 }
 
 .radio-container input {
     margin-right: 5px;
 }
-
+.radio-container input[type="radio"] {
+    cursor:pointer;
+}
 .tip {
     visibility: hidden;
     opacity: 0;

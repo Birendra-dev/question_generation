@@ -25,7 +25,7 @@ def extract_keywords(text: str, num_keywords: int = 10) -> List[str]:
 
 def rank_sentences(text: str, keywords: List[str]) -> List[str]:
     """Ranks sentences based on keyword density."""
-    sentences = sent_tokenize(text)
+    sentences = sent_tokenize(text)   #breaks the context into sentences
     sentence_scores = {sent: sum(1 for word in word_tokenize(sent.lower()) if word in keywords) for sent in sentences}
     ranked_sentences = sorted(sentences, key=lambda s: sentence_scores[s], reverse=True)
     return ranked_sentences

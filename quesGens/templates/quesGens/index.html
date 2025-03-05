@@ -92,7 +92,12 @@
                     <div class="radio-container">
                         {{ radio.tag }}
                     
-                        <span class="tip">{{ form.option_1.help_text }}</span>
+                        <!-- <span class="tip">{{ form.option_1.help_text }}</span> -->
+                        {% if radio.data.value == 'general' %}
+                           <span class="tip">General question generation based on context</span>
+                        {% elif radio.data.value == 't5-llm' %}
+                           <span class="tip">Science-based question generation using T5-LLM</span>
+                        {% endif %}
                         {{ radio.choice_label }}
                     </div>
                      {% endfor %}
@@ -105,7 +110,13 @@
                     {% for radio in form.option_2 %}
                     <div class="radio-container">
                         {{ radio.tag }}
-                        <span class="tip">{{ form.option_3.help_text }}</span>
+                            {% if radio.data.value == 'rake' %}
+                                <span class="tip">RAKE: Rapid Automatic Keyword Extraction</span>
+                            {% elif radio.data.value == 'spacy' %}
+                                <span class="tip">Spacy: NLP-based keyword extraction</span>
+                            {% elif radio.data.value == 'distilbert' %}
+                                <span class="tip">DistilBERT: Transformer-based keyword extraction</span>
+                            {% endif %}
                         {{ radio.choice_label }}
                     </div>
                     {% endfor %}
@@ -118,7 +129,13 @@
                     {% for radio in form.option_3 %}
         <div class="radio-container">
             {{ radio.tag }}
-            <span class="tip">{{ form.option_3.help_text }}</span>
+            {% if radio.data.value == 's2v' %}
+               <span class="tip">Sense2Vec: Similar word-based distractors</span>
+            {% elif radio.data.value == 't5-llm' %}
+               <span class="tip">LLM T5: Context-based distractor generation</span>
+            {% elif radio.data.value == 'llama' %}
+               <span class="tip">LLAMA: Advanced language model-based distractors</span>
+            {% endif %}
             {{ radio.choice_label }}
         </div>
           {% endfor %}
