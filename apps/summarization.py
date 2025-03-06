@@ -2,13 +2,13 @@ import nltk
 from nltk.tokenize import sent_tokenize
 from transformers import BartForConditionalGeneration, BartTokenizer
 
-nltk.data.path.append('D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
+nltk.data.path.append('D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
 try:
     nltk.data.find('tokenizers/punkt')
     nltk.data.find('tokenizers/punkt_tab')
 except LookupError:
-    nltk.download('punkt', download_dir='D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
-    nltk.download('punkt_tab', download_dir='D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
+    nltk.download('punkt', download_dir='D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
+    nltk.download('punkt_tab', download_dir='D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
 model_dir = "apps/bart-large-cnn"
 summary_model = BartForConditionalGeneration.from_pretrained(model_dir)
 summary_tokenizer = BartTokenizer.from_pretrained(model_dir)

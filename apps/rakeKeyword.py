@@ -2,29 +2,29 @@ import nltk
 from rake_nltk import Rake
 
 # Set custom NLTK data path
-nltk.data.path.append('D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
+nltk.data.path.append('D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
 
 # Ensure required nltk resources are available
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
-    nltk.download('stopwords', download_dir='D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
+    nltk.download('stopwords', download_dir='D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
 
 try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
-    nltk.download('punkt', download_dir='D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
+    nltk.download('punkt', download_dir='D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
 
 try:
     nltk.data.find('tokenizers/punkt_tab')
 except LookupError:
-    nltk.download('punkt_tab', download_dir='D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
+    nltk.download('punkt_tab', download_dir='D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
 
 
 try:
     nltk.data.find('taggers/averaged_perceptron_tagger')
 except LookupError:
-    nltk.download('averaged_perceptron_tagger_eng', download_dir='D:\\Files\\question_generation\\.venv\\Lib\\nltk_data')
+    nltk.download('averaged_perceptron_tagger_eng', download_dir='D:\\Files\\Major Project\\mcqs_generation\\.venv\\Lib\\nltk_data')
 
 
 def get_keywords_rake(content, num_keywords=4):
