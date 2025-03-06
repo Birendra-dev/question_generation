@@ -37,7 +37,7 @@ def generate_distractors_llama(context: str, question: str, answer: str) -> list
     response = model.invoke(messages)
     
     # Clean the response with regex to extract only text content
-    cleaned_response = re.sub(r'[\[\]{}"`*]', '', response)
+    cleaned_response = re.sub(r'[\[\]{}\'"`*]', '', response)
     
     # Split by comma and remove any leading/trailing whitespace
     distractors = [opt.strip() for opt in cleaned_response.split(',') if opt.strip()]
